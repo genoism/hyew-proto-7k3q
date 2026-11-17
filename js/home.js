@@ -47,6 +47,13 @@
     window.scrollTo(0, 0);
   }
 
+  /* Show where the word was found, unless it's already visible in the title */
+  function snip(text, title, q) {
+    if (H.wordRe(q).test(title)) return "";
+    var s = H.snippet(text, q);
+    return s ? '<span class="snip">' + s + "</span>" : "";
+  }
+
   function renderGrouped(results, q) {
     var html = '<section class="result-group"><h2>Questions &amp; Answers</h2>';
     if (!results.qa.length) html += '<p class="empty">No matching questions.</p>';
@@ -54,7 +61,7 @@
       html += '<ul class="result-list">';
       results.qa.forEach(function (it) {
         html += '<li><a href="' + H.qaUrl(it.id) + '" data-open-qa="' + it.id + '"><span class="q">' + H.highlight(it.question, q) +
-          '</span><span class="meta">' + esc(H.topicLabelList(it.topics)) + "</span></a></li>";
+          '</span><span class="meta">' + esc(H.topicLabelList(it.topics)) + "</span>" + snip(it.answer, it.question, q) + "</a></li>";
       });
       html += "</ul>";
     }
@@ -64,7 +71,7 @@
       html += '<ul class="result-list">';
       results.sheets.forEach(function (it) {
         html += '<li><a href="' + H.sheetUrl(it) + '"><span class="t">' + H.highlight(it.title, q) +
-          '</span><span class="meta">' + esc(H.sheetMeta(it)) + " · " + esc(H.topicLabelList(it.topics)) + "</span></a></li>";
+          '</span><span class="meta">' + esc(H.sheetMeta(it)) + " · " + esc(H.topicLabelList(it.topics)) + "</span>" + snip(H.sheetText(it), it.title, q) + "</a></li>";
       });
       html += "</ul>";
     }

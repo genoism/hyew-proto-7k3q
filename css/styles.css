@@ -1395,3 +1395,6 @@ header.site { --hpad: 64px; }
 .about-role { font: italic 500 20px/1.4 "Cormorant Garamond", serif; color: var(--mut); margin: 4px 0 22px; }
 .about-body p:not(.about-name):not(.about-role) { font: 500 21px/1.6 "Cormorant Garamond", serif; margin: 0 0 18px; max-width: 64ch; }
 @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 48px; margin-bottom: 64px; } }
+
+/* Search result snippets */
+.result-list .snip { display: block; font: 500 17px/1.45 "Cormorant Garamond", serif; color: var(--mut); margin-top: 6px; }

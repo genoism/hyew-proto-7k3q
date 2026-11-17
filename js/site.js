@@ -19,14 +19,38 @@
     return String(str == null ? "" : str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   };
+  /* Whole-word matching: the query must start and end on a word edge
+     (works for Hebrew too). "rav" matches "rav" and "Rav", not "gravy". */
+  function reEsc(w) { return w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+  H.wordRe = function (q, flags) {
+    var phrase = (q || "").trim().split(/\s+/).map(reEsc).join("\\s+");
+    if (!phrase) return null;
+    try { return new RegExp("(^|[^\\p{L}\\p{N}])(" + phrase + ")(?![\\p{L}\\p{N}])", "iu" + (flags || "")); }
+    catch (e) { return null; }
+  };
+  H.plain = function (html) {
+    html = (html || "").replace(/<sup[^>]*>[\s\S]*?<\/sup>/gi, "")
+      .replace(/<\/(p|h\d|li|div|ul|ol|blockquote)>|<br\s*\/?>/gi, " ");
+    var d = document.createElement("div"); d.innerHTML = html;
+    return (d.textContent || "").replace(/\s+/g, " ").trim();
+  };
   H.highlight = function (text, q) {
     var safe = H.esc(text);
-    if (!q) return safe;
-    var words = q.trim().split(/\s+/).filter(function (w) { return w.length > 1; });
-    if (!words.length) return safe;
-    var pattern = words.map(function (w) { return H.esc(w).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|");
-    try { return safe.replace(new RegExp("(" + pattern + ")", "gi"), "<mark>$1</mark>"); }
-    catch (e) { return safe; }
+    if (!q || !q.trim()) return safe;
+    var re = H.wordRe(H.esc(q.trim()), "g");
+    return re ? safe.replace(re, "$1<mark>$2</mark>") : safe;
+  };
+  /* A short excerpt around the first match, for results pages */
+  H.snippet = function (text, q, len) {
+    len = len || 170;
+    var re = H.wordRe(q); if (!re) return "";
+    var m = re.exec(text); if (!m) return "";
+    var at = m.index + m[1].length;
+    var start = Math.max(0, at - Math.floor(len / 2));
+    if (start > 0) { var sp = text.indexOf(" ", start); if (sp !== -1 && sp < at) start = sp + 1; }
+    var end = Math.min(text.length, start + len);
+    if (end < text.length) { var sp2 = text.lastIndexOf(" ", end); if (sp2 > at) end = sp2; }
+    return (start > 0 ? "… " : "") + H.highlight(text.slice(start, end), q) + (end < text.length ? " …" : "");
   };
   H.parsha = function (slug) { return (H.parshaBySlug || {})[slug] || { slug: slug, en: slug, he: "" }; };
   H.sheetById = function (id) { return (H.sheets || []).filter(function (s) { return s.id === String(id); })[0]; };
@@ -44,18 +68,19 @@
   H.sortedSheets = function () {
     return (H.sheets || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   };
+  H.sheetText = function (s) { return s._text || (s._text = H.plain(H.sheetBody(s))); };
   H.searchItems = function (q) {
-    var needle = (q || "").trim().toLowerCase();
-    if (!needle) return { qa: [], sheets: [] };
-    function hay(parts) { return parts.join(" ").toLowerCase(); }
+    var re = H.wordRe(q);
+    if (!re) return { qa: [], sheets: [] };
+    function hit(parts) { return re.test(parts.join(" \n ")); }
     return {
       qa: (H.qa || []).filter(function (it) {
-        return hay([it.question, it.answer].concat((it.topics || []).map(H.topicName))).indexOf(needle) !== -1;
+        return hit([it.question, it.answer].concat((it.topics || []).map(H.topicName)));
       }),
       sheets: H.sortedSheets().filter(function (it) {
         var p = H.parsha(it.parsha);
-        return hay([it.title, it.excerpt || "", p.en, p.he, it.year, "No. " + it.number]
-          .concat((it.topics || []).map(H.topicName))).indexOf(needle) !== -1;
+        return hit([it.title, it.excerpt || "", H.sheetText(it), p.en, p.he, it.year, "No. " + it.number]
+          .concat((it.topics || []).map(H.topicName)));
       })
     };
   };
