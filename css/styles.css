@@ -577,6 +577,23 @@ body[data-paper="rail"] .past {
 body[data-paper="rail"] .past li { border-bottom: 0; padding: 12px 0 0; }
 .past button:hover, .past a:hover,
 .past button:focus-visible, .past a:focus-visible { color: var(--red); }
+.past a:hover .ex, .past a:focus-visible .ex { color: var(--mut); }
+.past .ex,
+.sheet-list .ex {
+  display: block;
+  margin-top: 6px;
+  font: italic 500 17px/1.4 "Cormorant Garamond", serif;
+  color: var(--mut);
+}
+.past .ex { margin-top: 4px; font-size: 16px; line-height: 1.35; }
+body[data-paper="rail"] .past .ex {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 15px;
+  margin-top: 3px;
+}
 
 /* ---------- Dedication, ask, donate, haskamos, footer ---------- */
 .ded {
@@ -1014,6 +1031,15 @@ body[data-paper="rail"] .cols { font-size: 16.5px; line-height: 1.6; }
 .sheet-list .meta { color: var(--mut); margin-top: 6px; letter-spacing: .12em; }
 .sheet-list a:hover .t, .sheet-list a:focus-visible .t { color: var(--red); }
 .sheet-list.big .t { font-size: 27px; }
+.sheet-list .ex { margin: 6px 0 0; }
+@media (max-width: 640px) {
+  .sheet-list .ex, body[data-paper="below"] .past .ex {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
 
 /* ---------- Archive: the five chumashim ---------- */
 .books { border-top: 3px double var(--ink); }

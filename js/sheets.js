@@ -12,8 +12,11 @@
 
   function sheetRow(s) {
     var p = H.parsha(s.parsha);
+    var lead = H.sheetLead(s);
     return '<li><a href="' + H.sheetUrl(s) + '">' +
-      '<span class="t">' + esc(s.title) + '</span><span class="meta sc">No. ' + s.number + " · Shabbos Parshas " + esc(p.en) +
+      '<span class="t">' + esc(s.title) + "</span>" +
+      (lead ? '<span class="ex">' + esc(lead) + "</span>" : "") +
+      '<span class="meta sc">No. ' + s.number + " · Shabbos Parshas " + esc(p.en) +
       " · " + esc(s.year) + " · " + esc(H.fmtDate(s.date)) + " · " + esc(H.topicLabelList(s.topics)) + "</span></a></li>";
   }
 

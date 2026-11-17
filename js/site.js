@@ -95,6 +95,16 @@
     return (H.sheets || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   };
   H.sheetText = function (s) { return s._text || (s._text = H.plain(H.sheetBody(s))); };
+  /* First ~100 characters of a sheet's body, cut at a word boundary, for lists. */
+  H.sheetLead = function (s, len) {
+    len = len || 100;
+    var text = H.sheetText(s) || "";
+    if (text.length <= len) return text;
+    var chunk = text.slice(0, len);
+    var sp = chunk.lastIndexOf(" ");
+    if (sp > 0) chunk = chunk.slice(0, sp);
+    return chunk.replace(/[.,;:!?…]+$/, "").trim() + "…";
+  };
   H.searchItems = function (q) {
     var re = H.wordRe(q);
     if (!re) return { qa: [], sheets: [] };
