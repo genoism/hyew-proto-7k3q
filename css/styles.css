@@ -1384,3 +1384,14 @@ header.site { --hpad: 64px; }
   .f-actions .btn { width: 100%; }
 }
 .f > label, .f > .f-label { height: 18px; display: flex; align-items: baseline; gap: 2px; } .opt { line-height: 1; }
+
+/* About */
+.about-page .page-head { margin-bottom: 48px; }
+.about-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 72px; align-items: start; max-width: 1080px; margin: 0 auto 96px; }
+.about-body h2 { font-size: 12px; margin: 0 0 14px; }
+.about-body h2 + .about-name { margin-top: 0; }
+.about-body * + h2 { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--rule); }
+.about-name { font: 400 34px/1.15 "Frank Ruhl Libre", serif; margin: 0; }
+.about-role { font: italic 500 20px/1.4 "Cormorant Garamond", serif; color: var(--mut); margin: 4px 0 22px; }
+.about-body p:not(.about-name):not(.about-role) { font: 500 21px/1.6 "Cormorant Garamond", serif; margin: 0 0 18px; max-width: 64ch; }
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 48px; margin-bottom: 64px; } }
