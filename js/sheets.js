@@ -12,16 +12,15 @@
 
   function sheetRow(s) {
     var p = H.parsha(s.parsha);
-    return '<li><a href="' + H.sheetUrl(s) + '"><span class="yr sc">' + esc(s.year) + "</span>" +
+    return '<li><a href="' + H.sheetUrl(s) + '">' +
       '<span class="t">' + esc(s.title) + '</span><span class="meta sc">No. ' + s.number + " · Shabbos Parshas " + esc(p.en) +
-      " · " + esc(H.fmtDate(s.date)) + " · " + esc(H.topicLabelList(s.topics)) + "</span></a></li>";
+      " · " + esc(s.year) + " · " + esc(H.fmtDate(s.date)) + " · " + esc(H.topicLabelList(s.topics)) + "</span></a></li>";
   }
 
   /* ---------- archive: five chumashim ---------- */
   if (page === "parsha-sheets") {
     var latest = H.sortedSheets().slice(0, 4);
-    var html = '<header class="page-head"><div class="kicker sc red">Parshiyos HaShavua</div><h1>Parsha Sheets</h1>' +
-      '<p class="lede">Every weekly paper, filed under its parsha. Choose a parsha to see each year’s sheet.</p></header>' +
+    var html = '<header class="page-head"><h1>Parsha Sheets</h1></header>' +
       '<section class="latest"><h2 class="tg-h sc">Latest sheets</h2><ul class="sheet-list">' + latest.map(sheetRow).join("") + "</ul></section>" +
       '<nav class="book-jump sc" aria-label="Chumashim">' + H.books.map(function (b) {
         return '<a href="#' + b.id + '">' + esc(b.en) + "</a>";

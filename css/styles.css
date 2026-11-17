@@ -1331,3 +1331,4 @@ header.site { --hpad: 64px; }
   }
 }
 @media (max-width: 1100px) { header.site { --hpad: 32px; } }
+.sheet-list a { grid-template-columns: 1fr; }
