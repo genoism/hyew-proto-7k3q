@@ -10,21 +10,24 @@
   function countFor(slug) { return (H.sheets || []).filter(function (s) { return s.parsha === slug; }).length; }
   function sheetsFor(slug) { return H.sortedSheets().filter(function (s) { return s.parsha === slug; }); }
 
-  function sheetRow(s) {
+  function sheetRow(s, opts) {
+    opts = opts || {};
     var p = H.parsha(s.parsha);
     var lead = H.sheetLead(s);
+    var meta = "No. " + s.number + " · Shabbos Parshas " + esc(p.en) +
+      " · " + esc(s.year) + " · " + esc(H.fmtDate(s.date));
+    if (!opts.hideTopics) meta += " · " + esc(H.topicLabelList(s.topics));
     return '<li><a href="' + H.sheetUrl(s) + '">' +
       '<span class="t">' + esc(s.title) + "</span>" +
       (lead ? '<span class="ex">' + esc(lead) + "</span>" : "") +
-      '<span class="meta sc">No. ' + s.number + " · Shabbos Parshas " + esc(p.en) +
-      " · " + esc(s.year) + " · " + esc(H.fmtDate(s.date)) + " · " + esc(H.topicLabelList(s.topics)) + "</span></a></li>";
+      '<span class="meta sc">' + meta + "</span></a></li>";
   }
 
   /* ---------- archive: five chumashim ---------- */
   if (page === "parsha-sheets") {
     var latest = H.sortedSheets().slice(0, 4);
     var html = '<header class="page-head"><h1>Parsha Sheets</h1></header>' +
-      '<section class="latest"><h2 class="tg-h sc">Latest sheets</h2><ul class="sheet-list">' + latest.map(sheetRow).join("") + "</ul></section>" +
+      '<section class="latest"><h2 class="tg-h sc">Latest sheets</h2><ul class="sheet-list">' + latest.map(function (s) { return sheetRow(s, { hideTopics: true }); }).join("") + "</ul></section>" +
       '<nav class="book-jump sc" aria-label="Chumashim">' + H.books.map(function (b) {
         return '<a href="#' + b.id + '">' + esc(b.en) + "</a>";
       }).join('<span aria-hidden="true">·</span>') + "</nav>" +
