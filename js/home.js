@@ -127,7 +127,7 @@
     var p = H.parsha(f.parsha);
     document.getElementById("featured-paper").innerHTML =
       H.mastHtml(f, "h2") +
-      '<div class="byline sc">' + esc(H.topicLabelList(f.topics)) + " · Shabbos Parshas " + esc(p.en) + " · " + esc(H.fmtSheetDate(f)) + "</div>" +
+      '<div class="byline sc">' + esc(H.topicLabelList(f.topics)) + " · " + esc(p.en) + " · " + esc(H.fmtSheetDate(f)) + "</div>" +
       (f.sponsored ? '<div class="spline">' + esc(f.sponsored) + ' · <a class="u" href="pages/sponsor.html">Sponsor the next one</a></div>' : "") +
       '<div class="cols gl-scope">' + H.sheetBody(f) + "</div>" +
       '<div class="fade"><a class="sc" href="' + H.sheetUrl(f) + '">Read the full paper →</a></div>';

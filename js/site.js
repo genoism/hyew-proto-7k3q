@@ -135,7 +135,7 @@
       })
     };
   };
-  H.sheetMeta = function (s) { return "No. " + s.number + " · Parshas " + H.parsha(s.parsha).en + " · " + H.fmtSheetDate(s); };
+  H.sheetMeta = function (s) { return "No. " + s.number + " · " + H.parsha(s.parsha).en + " · " + H.fmtSheetDate(s); };
 
   /* ---------- layout option (search position), shared across pages ---------- */
   var params = new URLSearchParams(location.search);
@@ -438,7 +438,7 @@
   H.mastHtml = function (s, tag) {
     tag = tag || "h1";
     var p = H.parsha(s.parsha);
-    return '<div class="mast"><div class="row sc"><span>No. ' + s.number + "</span><span lang=\"he\">בס״ד</span><span>Parshas " +
+    return '<div class="mast"><div class="row sc"><span>No. ' + s.number + "</span><span lang=\"he\">בס״ד</span><span>" +
       H.esc(p.en) + " · " + H.esc(H.fmtSheetDate(s)) + '</span></div><div class="t">Have You Ever Wondered<span>…</span></div><div class="sub">HALACHA</div></div>' +
       "<" + tag + ' class="sheet-title" id="sheet-title">' + H.esc(s.title).replace(/\?$/, "<em>?</em>") + "</" + tag + ">";
   };

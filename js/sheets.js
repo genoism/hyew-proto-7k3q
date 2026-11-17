@@ -14,7 +14,7 @@
     opts = opts || {};
     var p = H.parsha(s.parsha);
     var lead = H.sheetLead(s);
-    var meta = "No. " + s.number + " · Shabbos Parshas " + esc(p.en) +
+    var meta = "No. " + s.number + " · " + esc(p.en) +
       " · " + esc(H.fmtSheetDate(s));
     if (!opts.hideTopics) meta += " · " + esc(H.topicLabelList(s.topics));
     return '<li><a href="' + H.sheetUrl(s) + '">' +
@@ -57,18 +57,18 @@
       var flat = []; H.books.forEach(function (b) { flat = flat.concat(b.parshiyos); });
       var idx = flat.indexOf(p), prev = flat[idx - 1], next = flat[idx + 1];
       var list = sheetsFor(slug);
-      document.title = "Parshas " + p.en + " — Have You Ever Wondered";
+      document.title = p.en + " — Have You Ever Wondered";
       main.innerHTML =
         '<nav class="crumbs sc" aria-label="Breadcrumb"><a href="parsha-sheets.html">Parsha Sheets</a><span>/</span><a href="parsha-sheets.html#' + book.id + '">' + esc(book.en) + "</a><span>/</span><span aria-current=\"page\">" + esc(p.en) + "</span></nav>" +
         '<header class="page-head parsha-head"><div class="kicker sc red">Sefer ' + esc(book.en) + ' · <span lang="he" dir="rtl">' + esc(book.he) + "</span></div>" +
-        "<h1>Parshas " + esc(p.en) + '</h1><div class="he-big" lang="he" dir="rtl">פרשת ' + esc(p.he) + "</div>" +
+        "<h1>" + esc(p.en) + '</h1><div class="he-big" lang="he" dir="rtl">פרשת ' + esc(p.he) + "</div>" +
         '<p class="lede">' + (list.length ? list.length + " sheet" + (list.length > 1 ? "s" : "") + " on this parsha, newest first." : "No sheets on this parsha yet.") + "</p></header>" +
         (list.length ? '<ul class="sheet-list big">' + list.map(sheetRow).join("") + "</ul>"
-          : '<p class="empty">The sheets for Parshas ' + esc(p.en) + ' will appear here as they are published. <a class="u" href="pages/subscribe.html">Get the weekly paper by email</a>.</p>') +
+          : '<p class="empty">The sheets for ' + esc(p.en) + ' will appear here as they are published. <a class="u" href="pages/subscribe.html">Get the weekly paper by email</a>.</p>') +
         '<nav class="pn sc" aria-label="Other parshiyos">' +
-          (prev ? '<a href="' + H.parshaUrl(prev.slug) + '">← Parshas ' + esc(prev.en) + "</a>" : "<span></span>") +
+          (prev ? '<a href="' + H.parshaUrl(prev.slug) + '">← ' + esc(prev.en) + "</a>" : "<span></span>") +
           '<a href="parsha-sheets.html">All parshiyos</a>' +
-          (next ? '<a href="' + H.parshaUrl(next.slug) + '">Parshas ' + esc(next.en) + " →</a>" : "<span></span>") +
+          (next ? '<a href="' + H.parshaUrl(next.slug) + '">' + esc(next.en) + " →</a>" : "<span></span>") +
         "</nav>";
     }
   }
@@ -90,13 +90,13 @@
         '</a><span>/</span><a href="' + H.parshaUrl(ps.slug) + '">' + esc(ps.en) + "</a><span>/</span><span aria-current=\"page\">No. " + s.number + "</span></nav>" +
       '<div class="single">' +
         '<article class="paper full" aria-labelledby="sheet-title">' + H.mastHtml(s, "h1") +
-          '<div class="byline sc">Shabbos Parshas ' + esc(ps.en) + " · " + esc(H.fmtSheetDate(s)) + "</div>" +
+          '<div class="byline sc">' + esc(ps.en) + " · " + esc(H.fmtSheetDate(s)) + "</div>" +
           (s.sponsored ? '<div class="spline">' + esc(s.sponsored) + ' · <a class="u" href="pages/sponsor.html">Sponsor the next one</a></div>' : "") +
           '<div class="cols gl-scope">' + H.sheetBody(s) + "</div>" +
           (s.body ? "" : '<p class="disclaimer">Sample sheet (placeholder). The full paper will appear here once the Word document is converted.</p>') +
         "</article>" +
         '<aside class="single-side" aria-label="About this sheet">' +
-          '<div class="meta-block"><h2 class="sc">Parsha</h2><p><a href="' + H.parshaUrl(ps.slug) + '">Parshas ' + esc(ps.en) + ' <span lang="he" dir="rtl">' + esc(ps.he) + "</span></a></p>" +
+          '<div class="meta-block"><h2 class="sc">Parsha</h2><p><a href="' + H.parshaUrl(ps.slug) + '">' + esc(ps.en) + ' <span lang="he" dir="rtl">' + esc(ps.he) + "</span></a></p>" +
             '<h2 class="sc">Date</h2><p>Shabbos, ' + esc(H.fmtSheetDate(s)) + "<br>No. " + s.number + "</p>" +
             '<h2 class="sc">Topics</h2><div class="topic-chips">' + H.chips(s.topics, false) + "</div></div>" +
           H.shareBoxHtml("Share this sheet", shareText, url) +
@@ -106,9 +106,9 @@
         (older ? '<a href="' + H.sheetUrl(older) + '"><span class="sc">← Previous sheet</span><span class="t">' + esc(older.title) + "</span></a>" : "<span></span>") +
         (newer ? '<a class="nx" href="' + H.sheetUrl(newer) + '"><span class="sc">Next sheet →</span><span class="t">' + esc(newer.title) + "</span></a>" : "<span></span>") +
       "</nav>" +
-      '<section class="more-on"><h2 class="tg-h sc">More on Parshas ' + esc(ps.en) + "</h2>" +
+      '<section class="more-on"><h2 class="tg-h sc">More on ' + esc(ps.en) + "</h2>" +
         (more.length ? '<ul class="sheet-list">' + more.map(sheetRow).join("") + "</ul>"
-          : '<p class="empty">This is the only sheet on Parshas ' + esc(ps.en) + ' so far. <a class="u" href="parsha-sheets.html">Browse all parshiyos</a>.</p>') +
+          : '<p class="empty">This is the only sheet on ' + esc(ps.en) + ' so far. <a class="u" href="parsha-sheets.html">Browse all parshiyos</a>.</p>') +
       "</section>";
 
     H.bindShare(main, shareText, url);

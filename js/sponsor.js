@@ -14,7 +14,7 @@
   var sel = form.elements.week;
   all.slice(at + 1, at + 11).forEach(function (p) {
     var o = document.createElement("option");
-    o.value = p.slug; o.textContent = "Parshas " + p.en + "  ·  " + p.he;
+    o.value = p.slug; o.textContent = p.en + "  ·  " + p.he;
     sel.appendChild(o);
   });
 
