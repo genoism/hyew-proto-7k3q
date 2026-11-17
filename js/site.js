@@ -168,7 +168,9 @@
   var headerHtml =
     '<a class="skip" href="#main">Skip to content</a>' +
     '<header class="site">' +
-      '<button class="menu-btn sc" type="button" aria-controls="mobile-menu" aria-expanded="false" data-open-menu>Menu</button>' +
+      '<button class="menu-btn sc" type="button" aria-controls="mobile-menu" aria-expanded="false" data-open-menu>' +
+        '<span class="menu-ic" aria-hidden="true"><span></span><span></span><span></span></span>' +
+        '<span class="menu-lbl">Menu</span></button>' +
       '<nav class="nav-l sc" aria-label="Primary">' +
         nav("index.html", "Home", "home") + nav("pages/about.html", "About", "about") + nav("haskamos.html", "Haskamos", "haskamos") +
       "</nav>" + brand +
@@ -288,21 +290,38 @@
   });
 
   var mobileMenu = document.getElementById("mobile-menu");
+  function setMenuOpen(open) {
+    mobileMenu.hidden = !open;
+    document.body.classList.toggle("menu-open", open);
+    var b = document.querySelector("[data-open-menu]");
+    if (b) {
+      b.setAttribute("aria-expanded", open ? "true" : "false");
+      b.classList.toggle("is-open", open);
+      var lbl = b.querySelector(".menu-lbl");
+      if (lbl) lbl.textContent = open ? "Close" : "Menu";
+    }
+    if (open) {
+      var header = document.querySelector("header.site");
+      if (header) mobileMenu.style.paddingTop = Math.ceil(header.getBoundingClientRect().bottom) + "px";
+    }
+  }
   document.addEventListener("click", function (e) {
     var t = e.target.closest("[data-open-results]");
     if (t) { e.preventDefault(); submitSearch(H.visibleSearchInput().value); return; }
     t = e.target.closest("[data-open-menu]");
-    if (t) { e.preventDefault(); mobileMenu.hidden = false; t.setAttribute("aria-expanded", "true"); return; }
+    if (t) { e.preventDefault(); setMenuOpen(mobileMenu.hidden); return; }
     t = e.target.closest("[data-close-menu]");
-    if (t) {
-      e.preventDefault(); mobileMenu.hidden = true;
-      var b = document.querySelector("[data-open-menu]"); if (b) b.setAttribute("aria-expanded", "false"); return;
-    }
+    if (t) { e.preventDefault(); setMenuOpen(false); return; }
     if (!e.target.closest(".search")) hideDrops();
   });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
-    if (!mobileMenu.hidden) { mobileMenu.hidden = true; return; }
+    if (!mobileMenu.hidden) {
+      setMenuOpen(false);
+      var b = document.querySelector("[data-open-menu]");
+      if (b) b.focus();
+      return;
+    }
     hideDrops();
   });
 
