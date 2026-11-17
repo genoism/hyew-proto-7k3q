@@ -157,7 +157,7 @@
       '<div><span class="foot-brand">Have You Ever Wondered</span><span class="foot-sub">A weekly halacha paper.</span></div>' +
       "<div>" + nav("index.html", "Home") + nav("pages/about.html", "About") + nav("haskamos.html", "Haskamos") + nav("parsha-sheets.html", "Parsha Sheets") + "</div>" +
       "<div>" + nav("pages/ask.html", "Ask a Question") + nav("pages/subscribe.html", "Subscribe") + nav("pages/donate.html", "Donate") + nav("pages/sponsor.html", "Sponsor the next HYEW") + "</div>" +
-      '<div style="line-height:2.1">Written b’zchus a refuah shleimah for [Name]<br>© 2026 · HYEWhalacha.com</div>' +
+      '<div class="foot-ded"><p><span class="l">In the Zechus of a Refuah Shleima of my Rabbeim,</span><span class="l">Rav Shmuel Kamenetzky <i>shlita</i>,</span><span class="l" lang="he" dir="rtl">הגאון הרב שמואל בן איטא עטיל</span><span class="l">and Rav Moshe Heinemann <i>shlita</i>,</span><span class="l" lang="he" dir="rtl">הגאון הרב משה בן פנינה</span></p><p class="copy">© 2026 · HYEWhalacha.com</p></div>' +
     "</footer>";
 
   var hSlot = document.getElementById("site-header");

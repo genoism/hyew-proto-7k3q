@@ -1398,3 +1398,20 @@ header.site { --hpad: 64px; }
 
 /* Search result snippets */
 .result-list .snip { display: block; font: 500 17px/1.45 "Cormorant Garamond", serif; color: var(--mut); margin-top: 6px; }
+
+/* Dedication line: homepage strip and footer */
+.ded { line-height: 1.5; padding: 18px 24px; }
+.ded span[lang="he"] { font: 500 19px/1.4 "Frank Ruhl Libre", serif; color: var(--red); unicode-bidi: isolate; white-space: nowrap; }
+.ded i { color: var(--red); }
+.ded a.u { font: 500 11px/1 "IBM Plex Sans Condensed", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--red); border-bottom: 1px solid currentColor; margin-left: 8px; font-style: normal; white-space: nowrap; }
+.foot-ded p { margin: 0; font: italic 500 16px/1.5 "Cormorant Garamond", serif; text-transform: none; letter-spacing: 0; }
+.foot-ded span[lang="he"] { font: 500 15px/1.5 "Frank Ruhl Libre", serif; font-style: normal; unicode-bidi: isolate; white-space: nowrap; }
+.foot-ded .copy { font: inherit; font-style: normal; margin-top: 12px; }
+.ded .l { display: block; }
+.ded span[lang="he"] { color: var(--ink); }
+.foot-ded .l { display: block; }
+.foot-ded .l[lang="he"] { text-align: left; color: var(--red); }
+.foot-ded .copy { font: 500 11px/1 "IBM Plex Sans Condensed", sans-serif; letter-spacing: .14em; margin-top: 14px; }
+.ded .l { color: var(--ink); font-style: italic; }
+.ded .l span[lang="he"], .ded .l i { color: var(--red); }
+.ded .l span[lang="he"] { font-style: normal; }
