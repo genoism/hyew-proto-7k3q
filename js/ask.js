@@ -5,11 +5,6 @@
   var form = document.getElementById("ask-form");
   if (!form) return;
   var status = document.getElementById("f-status");
-  var file = document.getElementById("f-file");
-  var fileName = document.getElementById("file-name");
-  file.addEventListener("change", function () {
-    fileName.textContent = file.files.length ? file.files[0].name : "No file chosen";
-  });
   var rules = {
     name: function (v) { return v.trim().length > 0; },
     email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
