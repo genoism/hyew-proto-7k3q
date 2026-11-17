@@ -7,23 +7,97 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=IBM+Plex+Sans+Condensed:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=20261117f">
+  <link rel="stylesheet" href="../css/styles.css?v=20261117g">
 </head>
 <body data-page="ask" data-base="../" data-search="below">
   <div id="site-header"></div>
   <main id="main">
-    <div class="wrap">
-      <div class="soon">
-      <p class="sc red" style="margin-bottom:10px">Coming soon</p>
-      <h1>Ask a Question</h1>
-      <p>A private form — name, email, subject, phone, question, and an optional attachment — will be built on this page. We aim to reply within 48 hours.</p>
-      <a class="btn sc" href="../index.html">Back to the homepage</a>
-    </div>
+    <div class="wrap ask-page">
+      <header class="page-head">
+        <h1>Ask a Question</h1>
+        <p class="lede">Send a halachic question, a comment on a sheet, or anything else. Every message is read personally.</p>
+      </header>
+
+      <div class="ask-grid">
+        <form class="ask-form" id="ask-form" novalidate>
+          <div class="f-row two">
+            <div class="f">
+              <label for="f-name">Name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+              <p class="f-err" id="e-name" hidden>Please enter your name.</p>
+            </div>
+            <div class="f">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+              <p class="f-err" id="e-email" hidden>Please enter a valid email address.</p>
+            </div>
+          </div>
+          <div class="f-row two">
+            <div class="f">
+              <label for="f-phone">Phone <span class="opt">optional</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+            <div class="f">
+              <label for="f-subject">Subject <span class="req" aria-hidden="true">*</span></label>
+              <div class="sel">
+                <select id="f-subject" name="subject" required>
+                  <option value="" selected disabled>Choose one</option>
+                  <option>A halachic question</option>
+                  <option>A comment on a parsha sheet</option>
+                  <option>Sponsoring a sheet</option>
+                  <option>Subscribing or the email list</option>
+                  <option>Something else</option>
+                </select>
+              </div>
+              <p class="f-err" id="e-subject" hidden>Please choose a subject.</p>
+            </div>
+          </div>
+          <div class="f">
+            <label for="f-question">Your question <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="f-question" name="question" rows="8" required></textarea>
+            <p class="f-err" id="e-question" hidden>Please write your question.</p>
+          </div>
+          <div class="f">
+            <span class="f-label" id="l-file">Attachment <span class="opt">optional</span></span>
+            <label class="file" for="f-file">
+              <input id="f-file" name="attachment" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-describedby="h-file">
+              <span class="file-btn sc">Choose file</span>
+              <span class="file-name" id="file-name">No file chosen</span>
+            </label>
+            <p class="f-help" id="h-file">PDF, Word, or an image, up to 10 MB.</p>
+          </div>
+          <label class="check">
+            <input type="checkbox" name="publish" value="yes">
+            <span>If my question is answered on the site, it may be shared anonymously.</span>
+          </label>
+          <div class="f-actions">
+            <button type="submit" class="btn r sc">Send question</button>
+            <p class="f-req"><span class="req" aria-hidden="true">*</span> Required</p>
+          </div>
+          <p class="f-status" id="f-status" role="status" hidden></p>
+        </form>
+
+        <aside class="ask-side" aria-label="About asking">
+          <section>
+            <h2 class="sc">What to expect</h2>
+            <p>We aim to reply within 48 hours, b’ezras Hashem. For a question that needs a ruling for your situation, please also ask your own rav.</p>
+          </section>
+          <section>
+            <h2 class="sc">Privacy</h2>
+            <p>Your name, email, and phone are never published or shared. Questions are only featured on the site with your permission, and without your name.</p>
+          </section>
+          <section>
+            <h2 class="sc">Before you ask</h2>
+            <p>Your question may already be answered. <a class="u" href="../index.html#topics">Browse the topics</a> or search above.</p>
+          </section>
+        </aside>
+      </div>
     </div>
   </main>
   <div id="site-footer"></div>
-  <script src="../js/data.js?v=20261117f"></script>
-  <script src="../js/glossary.js?v=20261117f"></script>
-  <script src="../js/site.js?v=20261117f"></script>
+  <script src="../js/data.js?v=20261117g"></script>
+  <script src="../js/glossary.js?v=20261117g"></script>
+  <script src="../js/site.js?v=20261117g"></script>
+  <script src="../js/ask.js?v=20261117g"></script>
 </body>
 </html>
