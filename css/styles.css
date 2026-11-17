@@ -1415,3 +1415,25 @@ header.site { --hpad: 64px; }
 .ded .l { color: var(--ink); font-style: italic; }
 .ded .l span[lang="he"], .ded .l i { color: var(--red); }
 .ded .l span[lang="he"] { font-style: normal; }
+
+/* Sponsor form */
+fieldset.f { border: 0; padding: 0; min-width: 0; }
+.sp-type legend { padding: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.chips label { position: relative; cursor: pointer; }
+.chips input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chips span { display: inline-block; border: 1px solid var(--ink); padding: 8px 16px 7px; font: 500 18px/1.2 "Cormorant Garamond", serif; color: var(--ink); background: transparent; }
+.chips label:hover span { border-color: var(--red); color: var(--red); }
+.chips input:checked + span { background: var(--red); border-color: var(--red); color: #FBF8F2; }
+.chips input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+.f input[lang="he"] { font: 500 21px/1.35 "Frank Ruhl Libre", serif; }
+.f input::placeholder, .f textarea::placeholder { color: var(--mut); font-style: italic; opacity: .8; }
+.f textarea[rows="4"] { min-height: 110px; }
+.sp-preview { margin: 4px 0 32px; padding: 18px 20px 16px; border: 1px dashed var(--rule); background: #FBF8F2; }
+.sp-preview .f-label { color: var(--mut); margin-bottom: 10px; height: auto; }
+.sp-preview .spline { margin: 0; font-size: 19px; line-height: 1.45; }
+.sp-preview .spline span[lang="he"] { font: 500 18px "Frank Ruhl Libre", serif; font-style: normal; unicode-bidi: isolate; }
+.steps { margin: 0; padding-left: 22px; font: 500 19px/1.5 "Cormorant Garamond", serif; color: var(--ink); }
+.steps li { margin-bottom: 8px; } .steps li::marker { color: var(--red); font-weight: 600; }
+.f .chips label { display: inline-block; margin: 0; text-transform: none; letter-spacing: 0; font: inherit; height: auto; }
+.chips span { padding: 7px 14px 6px; }

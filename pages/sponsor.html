@@ -7,23 +7,112 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=IBM+Plex+Sans+Condensed:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/styles.css?v=20261117m">
+  <link rel="stylesheet" href="../css/styles.css?v=20261117n">
 </head>
 <body data-page="sponsor" data-base="../" data-search="below">
   <div id="site-header"></div>
   <main id="main">
-    <div class="wrap">
-      <div class="soon">
-      <p class="sc red" style="margin-bottom:10px">Coming soon</p>
-      <h1>Sponsor the next HYEW</h1>
-      <p>Sponsorship — l’iluy nishmas, l’zecher, or for a refuah shleimah — will be arranged on this page.</p>
-      <a class="btn sc" href="../index.html">Back to the homepage</a>
-    </div>
+    <div class="wrap ask-page sponsor-page">
+      <header class="page-head">
+        <h1>Sponsor the next HYEW</h1>
+        <p class="lede">Dedicate a week’s paper l’iluy nishmas, l’zecher, for a refuah shleimah, or in honor of a simcha. Your dedication is printed on the paper and shown with it on the site.</p>
+      </header>
+
+      <div class="ask-grid">
+        <form class="ask-form" id="sp-form" novalidate>
+          <fieldset class="f sp-type">
+            <legend class="f-label">Type of dedication <span class="req" aria-hidden="true">*</span></legend>
+            <div class="chips" role="radiogroup">
+              <label><input type="radio" name="kind" value="l’iluy nishmas" checked><span>L’iluy nishmas</span></label>
+              <label><input type="radio" name="kind" value="l’zecher"><span>L’zecher</span></label>
+              <label><input type="radio" name="kind" value="for a refuah shleimah for"><span>Refuah shleimah</span></label>
+              <label><input type="radio" name="kind" value="in honor of"><span>In honor of</span></label>
+            </div>
+          </fieldset>
+
+          <div class="f-row two">
+            <div class="f">
+              <label for="f-honoree">Name, in English <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-honoree" name="honoree" type="text" required>
+              <p class="f-err" id="e-honoree" hidden>Please enter the name for the dedication.</p>
+            </div>
+            <div class="f">
+              <label for="f-heb">Name, in Hebrew <span class="opt">optional</span></label>
+              <input id="f-heb" name="heb" type="text" lang="he" dir="rtl" placeholder="פלוני בן פלונית">
+            </div>
+          </div>
+
+          <div class="f">
+            <label for="f-week">Week <span class="req" aria-hidden="true">*</span></label>
+            <div class="sel">
+              <select id="f-week" name="week" required>
+                <option value="next" selected>The next open week</option>
+              </select>
+            </div>
+            <p class="f-help">For a yahrzeit or simcha, choose its parsha and we’ll do our best to match it.</p>
+          </div>
+
+          <div class="sp-preview" aria-live="polite">
+            <p class="f-label">How it will appear</p>
+            <p class="spline" id="sp-line"></p>
+          </div>
+
+          <div class="f-row two">
+            <div class="f">
+              <label for="f-name">Your name <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+              <p class="f-err" id="e-name" hidden>Please enter your name.</p>
+            </div>
+            <div class="f">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+              <p class="f-err" id="e-email" hidden>Please enter a valid email address.</p>
+            </div>
+          </div>
+          <div class="f">
+            <label for="f-phone">Phone <span class="opt">optional</span></label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="f">
+            <label for="f-note">Anything else <span class="opt">optional</span></label>
+            <textarea id="f-note" name="note" rows="4" placeholder="A yahrzeit date, a few words about the person, or a special request."></textarea>
+          </div>
+          <label class="check">
+            <input type="checkbox" name="credit" value="yes" id="f-credit">
+            <span>Add “Sponsored by” with my name to the dedication.</span>
+          </label>
+          <div class="f-actions">
+            <button type="submit" class="btn r sc">Request sponsorship</button>
+            <p class="f-req"><span class="req" aria-hidden="true">*</span> Required</p>
+          </div>
+          <p class="f-status" id="f-status" role="status" hidden></p>
+        </form>
+
+        <aside class="ask-side" aria-label="About sponsoring">
+          <section>
+            <h2 class="sc">How it works</h2>
+            <ol class="steps">
+              <li>Send this form with the dedication and the week you’d like.</li>
+              <li>We confirm the week by email, along with how to pay by PayPal or Zelle.</li>
+              <li>Your dedication appears on that week’s printed paper and on its page here.</li>
+            </ol>
+          </section>
+          <section>
+            <h2 class="sc">Sponsorship</h2>
+            <p>[Amount set by the author.] Nothing is charged until your week is confirmed.</p>
+          </section>
+          <section>
+            <h2 class="sc">Other ways to give</h2>
+            <p>To support the paper without a dedication, <a class="u" href="donate.html">make a donation</a>. Questions? <a class="u" href="ask.html">Get in touch</a>.</p>
+          </section>
+        </aside>
+      </div>
     </div>
   </main>
   <div id="site-footer"></div>
-  <script src="../js/data.js?v=20261117m"></script>
-  <script src="../js/glossary.js?v=20261117m"></script>
-  <script src="../js/site.js?v=20261117m"></script>
+  <script src="../js/data.js?v=20261117n"></script>
+  <script src="../js/glossary.js?v=20261117n"></script>
+  <script src="../js/site.js?v=20261117n"></script>
+  <script src="../js/sponsor.js?v=20261117n"></script>
 </body>
 </html>
