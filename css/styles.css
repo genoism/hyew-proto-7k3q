@@ -1292,3 +1292,20 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   a { color: inherit; }
 }
 @media (max-width: 640px) { .book-jump > span { display: none; } .book-jump { flex-direction: column; align-items: center; } .paper.full .mast .t { font-size: 28px; } }
+
+/* Haskama letters (uncropped) + photo gallery */
+.hk-letter { display: block; width: 100%; margin: 26px 0 22px; text-decoration: none; color: var(--red); }
+.hk-letter img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--rule); box-shadow: 0 1px 2px #2A242014, 0 8px 24px #2A242014; transition: transform .2s ease, box-shadow .2s ease; }
+.hk-letter:hover img, .hk-letter:focus-visible img { transform: translateY(-2px); box-shadow: 0 2px 4px #2A24201f, 0 14px 32px #2A24201f; }
+.hk-open { display: inline-block; margin-top: 12px; font-size: 13px; letter-spacing: .08em; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+.hk-photos { margin-top: 80px; }
+.hk-photos-head { max-width: 520px; margin: 0 auto 32px; text-align: center; }
+.hk-photos-head h2 { margin: 14px 0 0; font: 500 15px "IBM Plex Sans Condensed", sans-serif; letter-spacing: .14em; color: var(--ink); }
+.hk-photo-row { display: grid; grid-template-columns: 1.33fr .8fr 1.35fr; gap: 20px; align-items: stretch; }
+.hk-photo-row a { display: block; background: var(--sheet); border: 1px solid var(--ink); padding: 8px; }
+.hk-photo-row img { display: block; width: 100%; height: 100%; max-height: 340px; object-fit: cover; object-position: center 30%; }
+@media (max-width: 860px) {
+  .hk-photo-row { grid-template-columns: 1fr; }
+  .hk-photo-row img { max-height: none; height: auto; object-fit: contain; }
+  .hk-photos { margin-top: 56px; }
+}
