@@ -1315,3 +1315,5 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .hk-letter { margin-bottom: 0; }
 .ded-text { margin-top: 0; }
 .hk-photos { margin-bottom: 88px; } @media (max-width: 860px) { .hk-photos { margin-bottom: 56px; } }
+/* Parsha sheets archive: latest first */
+.latest { margin-top: 8px; margin-bottom: 56px; }

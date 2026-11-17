@@ -22,23 +22,22 @@
     var latest = H.sortedSheets().slice(0, 4);
     var html = '<header class="page-head"><div class="kicker sc red">Parshiyos HaShavua</div><h1>Parsha Sheets</h1>' +
       '<p class="lede">Every weekly paper, filed under its parsha. Choose a parsha to see each year’s sheet.</p></header>' +
+      '<section class="latest"><h2 class="tg-h sc">Latest sheets</h2><ul class="sheet-list">' + latest.map(sheetRow).join("") + "</ul></section>" +
       '<nav class="book-jump sc" aria-label="Chumashim">' + H.books.map(function (b) {
         return '<a href="#' + b.id + '">' + esc(b.en) + "</a>";
       }).join('<span aria-hidden="true">·</span>') + "</nav>" +
       '<div class="books">' + H.books.map(function (b, i) {
         return '<section class="book" id="' + b.id + '" aria-labelledby="bk-' + b.id + '">' +
-          '<header class="book-h"><span class="bk-num sc">Sefer ' + (i + 1) + '</span><h2 id="bk-' + b.id + '">' + esc(b.en) +
+          '<header class="book-h"><h2 id="bk-' + b.id + '">' + esc(b.en) +
           '</h2><span class="he" lang="he" dir="rtl">' + esc(b.he) + "</span></header>" +
           '<ol class="parshiyos">' + b.parshiyos.map(function (p) {
             var n = countFor(p.slug);
             return '<li class="' + (n ? "has" : "none") + '"><a href="' + H.parshaUrl(p.slug) + '"' + (n === 0 ? ' aria-label="' + esc(p.en) + ', no sheets yet"' : ' aria-label="' + esc(p.en) + ", " + n + " sheet" + (n > 1 ? "s" : "") + '"') + ">" +
               '<span class="en">' + esc(p.en) + '</span><span class="dots" aria-hidden="true"></span>' +
               '<span class="he" lang="he" dir="rtl">' + esc(p.he) + "</span>" +
-              '<span class="n" aria-hidden="true">' + (n ? "❧" : "") + "</span>" +
               "</a></li>";
           }).join("") + "</ol></section>";
-      }).join("") + "</div>" +
-      '<section class="latest"><h2 class="tg-h sc">Latest sheets</h2><ul class="sheet-list">' + latest.map(sheetRow).join("") + "</ul></section>";
+      }).join("") + "</div>";
     main.innerHTML = html;
   }
 
