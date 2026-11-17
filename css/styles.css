@@ -1250,13 +1250,22 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   .hk-seal h2 { font-size: 26px; }
   .ded-text { font-size: 28px; } .ded-text .nm { font-size: 31px; } .ded-text .heb { font-size: 29px; }
   .page-head h1 { font-size: 44px; }
-}
-@media (max-width: 640px) {
-  .book { grid-template-columns: 1fr; gap: 14px; padding: 26px 0; }
-  .book-h { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  /* Book title above its parsha list; keep two parsha columns. */
+  .book { grid-template-columns: 1fr; gap: 16px; padding: 28px 0 30px; min-width: 0; }
+  .book-h { display: flex; align-items: baseline; gap: 12px 16px; flex-wrap: wrap; min-width: 0; }
   .book-h .bk-num { width: 100%; }
   .book-h h2 { font-size: 34px; margin: 0; }
-  .parshiyos { columns: 1; }
+  .parshiyos { columns: 2; column-gap: 28px; min-width: 0; }
+}
+@media (max-width: 640px) {
+  .book { padding: 26px 0; }
+  .book-h h2 { font-size: 32px; }
+  .parshiyos { column-gap: 16px; }
+  /* Two narrow columns: English over Hebrew so long names fit. */
+  .parshiyos a { flex-wrap: wrap; gap: 1px 8px; }
+  .parshiyos .dots { display: none; }
+  .parshiyos .en { font-size: 19px; white-space: normal; }
+  .parshiyos .he { flex: 1 0 100%; font-size: 15px; white-space: normal; }
   .single-side { grid-template-columns: 1fr; }
   .paper.full { padding: 30px 20px 30px; outline-offset: 4px; }
   .paper.full .mast .t { font-size: 32px; }
