@@ -1336,7 +1336,35 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   dfn.gl { text-decoration: none; background: none; }
   a { color: inherit; }
 }
-@media (max-width: 640px) { .book-jump > span { display: none; } .book-jump { flex-direction: column; align-items: center; } .paper.full .mast .t { font-size: 28px; } }
+@media (max-width: 640px) {
+  /* Five chumash jump-links as a 3×2 grid so they never stack in one column. */
+  .book-jump {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: stretch;
+    align-items: stretch;
+    column-gap: 8px;
+    row-gap: 4px;
+    width: 100%;
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .book-jump > span { display: none; }
+  .book-jump a {
+    grid-column: span 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 8px 4px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .book-jump a:nth-of-type(4) { grid-column: 2 / span 2; }
+  .book-jump a:nth-of-type(5) { grid-column: 4 / span 2; }
+  .paper.full .mast .t { font-size: 28px; }
+}
 
 /* Haskama letters (uncropped) + photo gallery */
 .hk-letter { display: block; width: 100%; margin: 26px 0 22px; text-decoration: none; color: var(--red); }
