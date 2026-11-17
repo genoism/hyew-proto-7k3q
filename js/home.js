@@ -28,6 +28,7 @@
     var next = new URLSearchParams();
     next.set("search", H.getSearchOpt());
     next.set("paper", paperOpt);
+    next.set("drill", H.getDrillOpt());
     if (state.q) next.set("q", state.q);
     history.replaceState({}, "", location.pathname + "?" + next.toString() + location.hash);
   }
@@ -37,8 +38,10 @@
     H.store.set("hyew-paper", paperOpt);
     document.querySelectorAll('input[name="opt-search"]').forEach(function (el) { el.checked = el.value === H.getSearchOpt(); });
     document.querySelectorAll('input[name="opt-paper"]').forEach(function (el) { el.checked = el.value === paperOpt; });
+    document.querySelectorAll('input[name="opt-drill"]').forEach(function (el) { el.checked = el.value === H.getDrillOpt(); });
     setUrl();
     H.syncSearchInputs(state.q);
+    renderTopics();
   }
 
   function showHome() {
@@ -147,6 +150,9 @@
   });
   document.querySelectorAll('input[name="opt-paper"]').forEach(function (el) {
     el.addEventListener("change", function () { paperOpt = el.value; applyLayout(); });
+  });
+  document.querySelectorAll('input[name="opt-drill"]').forEach(function (el) {
+    el.addEventListener("change", function () { H.setDrillOpt(el.value); applyLayout(); });
   });
 
   var proto = document.getElementById("proto");

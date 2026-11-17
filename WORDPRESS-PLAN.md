@@ -11,11 +11,11 @@ Two custom post types, registered in `functions.php`:
 - `qa` — one post per question. Post title = the question. Post content = the answer. Public, has an archive, `show_in_rest` true, `exclude_from_search` false. Rewrite slug `qa`, so permalinks are `/qa/can-you-set-a-timer-on-shabbos/` (generated from the question’s words).
 - `parsha_sheet` — one post per weekly HYEW paper. Title = the paper’s question-title. Content = the body of the paper. Post meta (registered with `register_post_meta`): `issue_number`, `parsha`, `hebrew_year`, `week_of`, `sponsor_line`. Public, has an archive, searchable. Permalinks such as `/papers/why-we-wait-six-hours/`.
 
-One shared flat taxonomy, `topic`, attached to both post types:
+One shared taxonomy, `topic`, attached to both post types, `hierarchical => true`:
 
-- `hierarchical => false`. A single flat list. A Q&A or a paper may have one or more topics.
-- Hebrew name stored as term meta, key `hebrew_name`, via `register_term_meta`. Add a “Hebrew name” field on the term edit screen with the core hooks `topic_add_form_fields`, `topic_edit_form_fields`, `created_topic`, and `edited_topic`. No ACF.
-- Term slug is the English name (`shabbos`, `kashrus`). Archive at `/topics/shabbos/`.
+- Parent terms are the site topics (`shabbos`, `kashrus`). Child terms are subtopics (`shabbos-melacha`, `kashrus-basar-chalav`). The homepage lists only top-level terms (`parent => 0`). A Q&A may have one or more subtopics (and therefore their parent topics); a paper is still tagged with parent topics.
+- Hebrew name stored as term meta, key `hebrew_name`, via `register_term_meta`, on both parent and child terms. Add a “Hebrew name” field on the term edit screen with the core hooks `topic_add_form_fields`, `topic_edit_form_fields`, `created_topic`, and `edited_topic`. No ACF.
+- Term slug is the English name. Parent archive at `/topics/shabbos/`. Child archive at `/topics/shabbos-melacha/` (unique slugs; no need for a nested rewrite). If a later review prefers nested URLs, `rewrite.hierarchical` can be turned on without a plugin.
 
 The homepage featured paper is the latest `parsha_sheet`, or a theme-mod override so a specific issue can be pinned.
 
@@ -26,7 +26,7 @@ Native WordPress search already looks through title and content. Set `exclude_fr
 In `pre_get_posts`, when `is_search()` and the main query:
 
 - Limit `post_type` to `qa` and `parsha_sheet` (do not return ordinary posts or pages in this search).
-- Optionally also match topic names by finding terms in `topic` whose name or Hebrew meta contains the query, then adding a `tax_query` with an `OR` relation against the keyword search. This can be done with a `posts_clauses` or a two-step query; keep it simple and documented in the theme.
+- Optionally also match topic and subtopic names by finding terms in `topic` (parents and children) whose name or Hebrew meta contains the query, then adding a `tax_query` with an `OR` relation against the keyword search. This can be done with a `posts_clauses` or a two-step query; keep it simple and documented in the theme.
 
 Do not try to replace the main search with a plugin index. Native search is literal word matching, not fuzzy. That is acceptable for this site if questions and paper bodies are stored as post content (so the words are actually in the database).
 
@@ -34,13 +34,13 @@ Grouped results live in `search.php`. Ignore or replace the main loop and run tw
 
 ## CSV import (inside the theme, one-time)
 
-The Q&A spreadsheet columns are `question,answer,topic1,topic2,topic3`. A topic column may be empty. The file `sample-qa.csv` in this prototype is a stand-in and will be replaced with the real sheet.
+The Q&A spreadsheet columns are `question,answer,topic1,topic2,topic3,subtopic1,subtopic2,subtopic3`. Topic and subtopic columns may be empty. A subtopic implies its parent topic: if a row names a subtopic, the importer assigns both the child term and that child’s parent, even when the parent was not repeated in a topic column. If a row names only a parent topic, assign that parent (useful before subtopics are filled in). The file `sample-qa.csv` in this prototype is a stand-in and will be replaced with the real sheet.
 
 Add a Tools admin page (`add_management_page`) in the theme: upload a CSV, verify a nonce, parse with `fgetcsv`, and for each row:
 
-1. Find or create each named topic term (`term_exists` / `wp_insert_term`). Hebrew names can be filled in later on the term edit screen, or from a second column if the real sheet includes them.
+1. Find or create each named parent topic term (`term_exists` / `wp_insert_term`). Then find or create each named subtopic as a child of its parent (`parent` argument on `wp_insert_term`). Hebrew names can be filled in later on the term edit screen, or from further columns if the real sheet includes them.
 2. Insert a `qa` post (`wp_insert_post`) with the question as title and the answer as content.
-3. Assign all present topic terms with `wp_set_object_terms`.
+3. Assign all present topic and subtopic terms with `wp_set_object_terms` (parents plus children).
 4. Skip or update a row if a `qa` with the same title already exists, and report a count of created / skipped / failed rows.
 
 Also register a WP-CLI command when `WP_CLI` is defined, for example:
@@ -62,9 +62,9 @@ Store the full paper body as post content so homepage excerpts, the single-paper
 
 ## Theme templates (map from this prototype)
 
-- `front-page.php` — topic grid (all `topic` terms, English name + `hebrew_name` meta) and the featured `parsha_sheet`. Layout options (search in the header vs. below; paper in a rail vs. below) can be theme-mod settings if you want to keep the choice; otherwise pick one after review.
-- `taxonomy-topic.php` — that topic’s Q&As only (`pre_get_posts` limits the query to the `qa` post type; parsha sheets do not appear on topic archives). English name with the Hebrew term meta beneath, then a list of questions linking to `single-qa.php`. No per-topic counts.
-- `single-qa.php` — breadcrumb (Home › first topic), question as the title, answer, clickable topic chips (term links), the same share-box partial used on `single-parsha_sheet.php` (native Share…, Copy link, WhatsApp, Email, Print), a “More questions on [topic]” list for each of the post’s topics (up to about five each, excluding the current post and deduped), and an “Ask a follow-up question” link to the Ask page that prefills the form with a reference to this question. Print stylesheet prints just the Q&A.
+- `front-page.php` — topic grid (top-level `topic` terms only, English name + `hebrew_name` meta) and the featured `parsha_sheet`. Layout options (search in the header vs. below; paper in a rail vs. below; topics listing Q&As directly vs. going through subtopics) can be theme-mod settings if you want to keep the choice; otherwise pick one after review.
+- `taxonomy-topic.php` — `pre_get_posts` limits the query to the `qa` post type; parsha sheets do not appear on topic archives. If the term is a **parent topic** and the site is using the flat drilldown, list that topic’s Q&As (questions assigned to the parent or to any of its children). If the term is a parent and the site is using subtopics, list the child terms (English with Hebrew beneath) linking to each child archive — not the Q&As themselves. If the term is a **child (subtopic)**, list only Q&As assigned to that child, with breadcrumb Home › Parent › Subtopic. English name with the Hebrew term meta beneath in every case. No per-topic counts.
+- `single-qa.php` — breadcrumb (Home › first topic, or Home › Topic › Subtopic when subtopics are in use), question as the title, answer, clickable chips (parent topic terms, or subtopic terms when that drilldown is on; term links), the same share-box partial used on `single-parsha_sheet.php` (native Share…, Copy link, WhatsApp, Email, Print), a “More questions on [topic]” or “More questions on [subtopic]” list for each of the post’s terms at the current level (up to about five each, excluding the current post and deduped), and an “Ask a follow-up question” link to the Ask page that prefills the form with a reference to this question. Print stylesheet prints just the Q&A.
 - `single-parsha_sheet.php` — see “Parsha sheets: taxonomy, archive, single, sharing” below.
 - `search.php` — grouped results, as above.
 - `archive-qa.php` / `archive-parsha_sheet.php` if useful.

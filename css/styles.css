@@ -759,7 +759,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--red); }
   right: 16px;
   bottom: 16px;
   z-index: 70;
-  width: 232px;
+  width: 248px;
   background: var(--sheet);
   border: 1px solid var(--ink);
   padding: 12px 14px 14px;
@@ -1217,6 +1217,12 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   .hask-head { margin-top: 48px; margin-bottom: 32px; }
 }
 
+
+
+/* Subtopic list on a topic page (Topic → Subtopics → Q&As mode) */
+.subtopics-index { max-width: 440px; margin: 0 auto 64px; }
+.subtopics-index ul { border-top: 1px solid var(--ink); }
+.subtopics-index li:last-child { border-bottom: 1px solid var(--rule); }
 
 /* ---------- Single Q&A ---------- */
 .qa-article { min-width: 0; }

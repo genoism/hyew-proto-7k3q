@@ -15,6 +15,17 @@
   H.topicById = topicById;
   H.topicName = function (id) { return topicById[id] ? topicById[id].en : id; };
   H.topicLabelList = function (ids) { return (ids || []).map(H.topicName).join(" · "); };
+  var subtopicById = {};
+  (H.subtopics || []).forEach(function (s) { subtopicById[s.id] = s; });
+  H.subtopicById = subtopicById;
+  H.subtopicName = function (id) { return subtopicById[id] ? subtopicById[id].en : id; };
+  H.subtopicLabelList = function (ids) { return (ids || []).map(H.subtopicName).join(" · "); };
+  H.subtopicsForTopic = function (tid) {
+    return (H.subtopics || []).filter(function (s) { return s.parent === tid; });
+  };
+  H.qaForSubtopic = function (sid) {
+    return (H.qa || []).filter(function (it) { return (it.subtopics || []).indexOf(sid) !== -1; });
+  };
   H.esc = function (str) {
     return String(str == null ? "" : str).replace(/&/g, "&amp;").replace(/</g, "&lt;")
       .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -90,7 +101,12 @@
     function hit(parts) { return re.test(parts.join(" \n ")); }
     return {
       qa: (H.qa || []).filter(function (it) {
-        return hit([it.question, it.answer].concat((it.topics || []).map(H.topicName)));
+        var parts = [it.question, it.answer].concat((it.topics || []).map(H.topicName));
+        (it.subtopics || []).forEach(function (sid) {
+          var s = subtopicById[sid];
+          if (s) parts.push(s.en, s.he);
+        });
+        return hit(parts);
       }),
       sheets: H.sortedSheets().filter(function (it) {
         var p = H.parsha(it.parsha);
@@ -118,6 +134,29 @@
   H.getSearchOpt = function () { return searchOpt; };
   H.store = store;
   body.setAttribute("data-search", searchOpt);
+
+  /* Topics drilldown: "topic" = Topic → Q&As (default); "sub" = Topic → Subtopics → Q&As */
+  var drillOpt = params.get("drill") || store.get("hyew-drill") || "topic";
+  if (drillOpt !== "sub") drillOpt = "topic";
+  if (params.get("drill")) store.set("hyew-drill", drillOpt);
+  H.setDrillOpt = function (v) {
+    drillOpt = v === "sub" ? "sub" : "topic";
+    store.set("hyew-drill", drillOpt);
+    body.setAttribute("data-drill", drillOpt);
+  };
+  H.getDrillOpt = function () { return drillOpt; };
+  H.isSubDrill = function () { return drillOpt === "sub"; };
+  body.setAttribute("data-drill", drillOpt);
+  H.withDrill = function (url) {
+    if (drillOpt !== "sub") return url;
+    return url + (url.indexOf("?") >= 0 ? "&" : "?") + "drill=sub";
+  };
+  H.topicUrl = function (id) { return H.withDrill(base + "topic.html?id=" + encodeURIComponent(id)); };
+  H.subtopicUrl = function (sid) {
+    var s = subtopicById[sid];
+    if (!s) return H.topicUrl(sid);
+    return H.withDrill(base + "topic.html?id=" + encodeURIComponent(s.parent) + "&sub=" + encodeURIComponent(s.id));
+  };
 
   /* ---------- chrome markup ---------- */
   var cur = body.getAttribute("data-page") || "";
@@ -274,6 +313,14 @@
       if (!t) return "";
       var inner = H.esc(t.en) + ' <span lang="he" dir="rtl">' + H.esc(t.he) + "</span>";
       return '<a class="topic-chip" href="' + H.topicUrl(t.id) + '">' + inner + "</a>";
+    }).join("");
+  };
+  H.subChips = function (ids) {
+    return (ids || []).map(function (sid) {
+      var s = subtopicById[sid];
+      if (!s) return "";
+      var inner = H.esc(s.en) + ' <span lang="he" dir="rtl">' + H.esc(s.he) + "</span>";
+      return '<a class="topic-chip" href="' + H.subtopicUrl(s.id) + '">' + inner + "</a>";
     }).join("");
   };
 
