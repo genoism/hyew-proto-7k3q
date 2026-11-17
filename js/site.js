@@ -84,11 +84,20 @@
     var slug = typeof it === "string" ? it : (it && it.slug);
     return base + "pages/ask.html?followup=" + encodeURIComponent(slug || "");
   };
-  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  /* English month + year only, e.g. "Nov 2026". */
   H.fmtDate = function (iso) {
     if (!iso) return "";
     var p = iso.split("-");
-    return parseInt(p[2], 10) + " " + MONTHS[parseInt(p[1], 10) - 1] + " " + p[0];
+    var mon = MONTHS[parseInt(p[1], 10) - 1] || "";
+    return (mon ? mon + " " : "") + p[0];
+  };
+  /* Combined display: "Nov 2026 / 5787". */
+  H.fmtSheetDate = function (s) {
+    if (!s) return "";
+    var en = H.fmtDate(s.date);
+    if (en && s.year) return en + " / " + s.year;
+    return en || String(s.year || "");
   };
   /* Sheets newest first */
   H.sortedSheets = function () {
@@ -126,7 +135,7 @@
       })
     };
   };
-  H.sheetMeta = function (s) { return "No. " + s.number + " · Parshas " + H.parsha(s.parsha).en + " " + s.year; };
+  H.sheetMeta = function (s) { return "No. " + s.number + " · Parshas " + H.parsha(s.parsha).en + " · " + H.fmtSheetDate(s); };
 
   /* ---------- layout option (search position), shared across pages ---------- */
   var params = new URLSearchParams(location.search);
@@ -430,7 +439,7 @@
     tag = tag || "h1";
     var p = H.parsha(s.parsha);
     return '<div class="mast"><div class="row sc"><span>No. ' + s.number + "</span><span lang=\"he\">בס״ד</span><span>Parshas " +
-      H.esc(p.en) + " · " + H.esc(s.year) + '</span></div><div class="t">Have You Ever Wondered<span>…</span></div><div class="sub">HALACHA</div></div>' +
+      H.esc(p.en) + " · " + H.esc(H.fmtSheetDate(s)) + '</span></div><div class="t">Have You Ever Wondered<span>…</span></div><div class="sub">HALACHA</div></div>' +
       "<" + tag + ' class="sheet-title" id="sheet-title">' + H.esc(s.title).replace(/\?$/, "<em>?</em>") + "</" + tag + ">";
   };
 })();

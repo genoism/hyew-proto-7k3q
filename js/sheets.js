@@ -15,7 +15,7 @@
     var p = H.parsha(s.parsha);
     var lead = H.sheetLead(s);
     var meta = "No. " + s.number + " · Shabbos Parshas " + esc(p.en) +
-      " · " + esc(s.year) + " · " + esc(H.fmtDate(s.date));
+      " · " + esc(H.fmtSheetDate(s));
     if (!opts.hideTopics) meta += " · " + esc(H.topicLabelList(s.topics));
     return '<li><a href="' + H.sheetUrl(s) + '">' +
       '<span class="t">' + esc(s.title) + "</span>" +
@@ -90,14 +90,14 @@
         '</a><span>/</span><a href="' + H.parshaUrl(ps.slug) + '">' + esc(ps.en) + "</a><span>/</span><span aria-current=\"page\">No. " + s.number + "</span></nav>" +
       '<div class="single">' +
         '<article class="paper full" aria-labelledby="sheet-title">' + H.mastHtml(s, "h1") +
-          '<div class="byline sc">Shabbos Parshas ' + esc(ps.en) + " · " + esc(H.fmtDate(s.date)) + "</div>" +
+          '<div class="byline sc">Shabbos Parshas ' + esc(ps.en) + " · " + esc(H.fmtSheetDate(s)) + "</div>" +
           (s.sponsored ? '<div class="spline">' + esc(s.sponsored) + ' · <a class="u" href="pages/sponsor.html">Sponsor the next one</a></div>' : "") +
           '<div class="cols gl-scope">' + H.sheetBody(s) + "</div>" +
           (s.body ? "" : '<p class="disclaimer">Sample sheet (placeholder). The full paper will appear here once the Word document is converted.</p>') +
         "</article>" +
         '<aside class="single-side" aria-label="About this sheet">' +
           '<div class="meta-block"><h2 class="sc">Parsha</h2><p><a href="' + H.parshaUrl(ps.slug) + '">Parshas ' + esc(ps.en) + ' <span lang="he" dir="rtl">' + esc(ps.he) + "</span></a></p>" +
-            '<h2 class="sc">Date</h2><p>Shabbos, ' + esc(H.fmtDate(s.date)) + "<br>" + esc(s.year) + " · No. " + s.number + "</p>" +
+            '<h2 class="sc">Date</h2><p>Shabbos, ' + esc(H.fmtSheetDate(s)) + "<br>No. " + s.number + "</p>" +
             '<h2 class="sc">Topics</h2><div class="topic-chips">' + H.chips(s.topics, false) + "</div></div>" +
           H.shareBoxHtml("Share this sheet", shareText, url) +
         "</aside>" +

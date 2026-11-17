@@ -127,14 +127,14 @@
     var p = H.parsha(f.parsha);
     document.getElementById("featured-paper").innerHTML =
       H.mastHtml(f, "h2") +
-      '<div class="byline sc">' + esc(H.topicLabelList(f.topics)) + " · Shabbos Parshas " + esc(p.en) + " · " + esc(H.fmtDate(f.date)) + "</div>" +
+      '<div class="byline sc">' + esc(H.topicLabelList(f.topics)) + " · Shabbos Parshas " + esc(p.en) + " · " + esc(H.fmtSheetDate(f)) + "</div>" +
       (f.sponsored ? '<div class="spline">' + esc(f.sponsored) + ' · <a class="u" href="pages/sponsor.html">Sponsor the next one</a></div>' : "") +
       '<div class="cols gl-scope">' + H.sheetBody(f) + "</div>" +
       '<div class="fade"><a class="sc" href="' + H.sheetUrl(f) + '">Read the full paper →</a></div>';
     var past = all.filter(function (s) { return s !== f; }).slice(0, 5);
     document.getElementById("past-weeks").innerHTML = past.map(function (s) {
       var lead = H.sheetLead(s);
-      return '<li><span class="w sc">No. ' + s.number + " · " + esc(H.parsha(s.parsha).en) + " " + s.year + "</span>" +
+      return '<li><span class="w sc">No. ' + s.number + " · " + esc(H.parsha(s.parsha).en) + " · " + esc(H.fmtSheetDate(s)) + "</span>" +
         '<a href="' + H.sheetUrl(s) + '"><span class="t">' + esc(s.title) + "</span>" +
         (lead ? '<span class="ex">' + esc(lead) + "</span>" : "") + "</a></li>";
     }).join("") + '<li class="all"><a class="u sc" href="parsha-sheets.html">All parsha sheets →</a></li>';
