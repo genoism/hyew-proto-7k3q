@@ -705,45 +705,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--red); }
   margin: 12px 0 40px;
 }
 
-/* ---------- Modal ---------- */
-.modal-back {
-  position: fixed;
-  inset: 0;
-  background: rgba(42, 36, 32, .45);
-  z-index: 200;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 48px 20px 40px;
-  overflow: auto;
-}
-.modal-back[hidden] { display: none; }
-.modal {
-  background: var(--sheet);
-  border: 1px solid var(--rule);
-  outline: 1px solid var(--rule);
-  outline-offset: 6px;
-  width: min(720px, 100%);
-  padding: 36px 40px 44px;
-  position: relative;
-  margin: auto 0;
-}
-.modal .close {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  background: none;
-  border: 0;
-  font: 500 11px/1 "IBM Plex Sans Condensed", sans-serif;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--mut);
-  padding: 6px;
-}
-.modal .close:hover { color: var(--red); }
-.modal .close:focus { outline: none; }
-.modal .close:focus-visible { color: var(--red); outline: 1px solid var(--red); outline-offset: 4px; }
-.modal .topic-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .topic-chip {
   border: 1px solid var(--rule);
   background: transparent;
@@ -757,31 +718,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--red); }
   border-color: var(--red);
   color: var(--red);
 }
-.modal h2 {
-  font: 500 32px/1.15 "Frank Ruhl Libre", serif;
-  margin: 0 0 16px;
-  letter-spacing: -.01em;
-  text-align: left;
-}
-.modal h2:focus, .modal h2:focus-visible { outline: none; }
-.modal .answer {
-  font: 400 19px/1.5 "Cormorant Garamond", serif;
-  margin: 0;
-}
-.modal .disclaimer {
-  margin: 22px 0 0;
-  padding-top: 12px;
-  border-top: 1px solid var(--rule);
-  color: var(--mut);
-  font: italic 15px/1.35 "Cormorant Garamond", serif;
-}
-body.modal-open { overflow: hidden; }
-body.modal-open .proto { visibility: hidden; }
-
-/* Sheet viewer uses the same modal shell, slightly wider */
-.modal.sheet-modal { width: min(860px, 100%); padding: 28px 32px 36px; }
-.modal .paper-body { margin-top: 8px; }
-.modal .paper-body .cols { columns: 1; column-rule: none; text-align: left; }
 
 /* ---------- Mobile menu ---------- */
 .mobile-menu {
@@ -971,8 +907,6 @@ body.modal-open .proto { visibility: hidden; }
   .search-band .search-field input { font-size: 22px; }
   .sec h2 { font-size: 32px; }
   .topics-sec h1 { font-size: 36px; margin-bottom: 20px; }
-  .modal { padding: 28px 22px 32px; }
-  .modal h2 { font-size: 26px; }
   .proto { right: 10px; bottom: 10px; }
 }
 
@@ -1279,16 +1213,50 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   .hk-he { font-size: 30px; }
   .hk-seal h2 { font-size: 22px; } .hk-seal h2 i { font-size: 18px; }
   .page-head { margin: 36px auto 28px; } .page-head h1 { font-size: 38px; }
+  .qa-article h1 { font-size: 28px; }
   .hask-head { margin-top: 48px; margin-bottom: 32px; }
 }
 
+
+/* ---------- Single Q&A ---------- */
+.qa-article { min-width: 0; }
+.qa-article .topic-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 18px; }
+.qa-article h1 {
+  font: 500 36px/1.18 "Frank Ruhl Libre", serif;
+  margin: 0 0 18px;
+  letter-spacing: -.01em;
+  text-align: left;
+}
+.qa-article .answer {
+  font: 400 21px/1.55 "Cormorant Garamond", serif;
+  margin: 0;
+  max-width: 68ch;
+}
+.qa-article .disclaimer {
+  margin: 22px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  color: var(--mut);
+  font: italic 16px/1.4 "Cormorant Garamond", serif;
+  max-width: 68ch;
+}
+.qa-follow { border-top: 1px solid var(--ink); padding-top: 14px; }
+.qa-follow p { margin: 0 0 10px; }
+.qa-list { max-width: 820px; margin: 0 auto 48px; }
+.more-on .tg-h a { color: inherit; }
+.more-on .tg-h a:hover { color: var(--red); }
+
 /* ---------- Print: a sheet prints as the paper only ---------- */
 @media print {
-  header.site, .search-band, footer.site, .single-side, .sheet-pn, .more-on, .crumbs, .proto, .mobile-menu, .skip, .gl-tip { display: none !important; }
+  header.site, .search-band, footer.site, .single-side, .sheet-pn, .more-on, .crumbs, .proto, .mobile-menu, .skip, .gl-tip, .qa-follow { display: none !important; }
   body { background: #fff; padding: 0; }
   .single { display: block; margin: 0; }
   .paper.full { border: 0; outline: 0; padding: 0; background: #fff; }
   .paper.full .cols { max-width: none; font-size: 12pt; }
+  .qa-article h1 { font-size: 18pt; margin: 0 0 12pt; }
+  .qa-article .answer { font-size: 12pt; line-height: 1.5; max-width: none; }
+  .qa-article .disclaimer { font-size: 10pt; }
+  .qa-article .topic-chips { margin-bottom: 10pt; }
   dfn.gl { text-decoration: none; background: none; }
   a { color: inherit; }
 }

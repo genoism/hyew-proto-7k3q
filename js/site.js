@@ -56,8 +56,23 @@
   H.sheetById = function (id) { return (H.sheets || []).filter(function (s) { return s.id === String(id); })[0]; };
   H.sheetUrl = function (s) { return base + "sheet.html?id=" + encodeURIComponent(s.id); };
   H.parshaUrl = function (slug) { return base + "parsha.html?p=" + encodeURIComponent(slug); };
-  H.topicUrl = function (id) { return base + "index.html?topic=" + encodeURIComponent(id); };
-  H.qaUrl = function (id) { return base + "index.html?qa=" + encodeURIComponent(id); };
+  H.topicUrl = function (id) { return base + "topic.html?id=" + encodeURIComponent(id); };
+  H.qaById = function (id) {
+    id = String(id || "");
+    if (!id) return null;
+    return (H.qa || []).filter(function (it) { return it.slug === id || it.id === id; })[0] || null;
+  };
+  H.qaForTopic = function (tid) {
+    return (H.qa || []).filter(function (it) { return (it.topics || []).indexOf(tid) !== -1; });
+  };
+  H.qaUrl = function (it) {
+    var slug = typeof it === "string" ? it : (it && it.slug);
+    return base + "qa.html?id=" + encodeURIComponent(slug || "");
+  };
+  H.askFollowupUrl = function (it) {
+    var slug = typeof it === "string" ? it : (it && it.slug);
+    return base + "pages/ask.html?followup=" + encodeURIComponent(slug || "");
+  };
   var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   H.fmtDate = function (iso) {
     if (!iso) return "";
@@ -167,7 +182,6 @@
 
   /* ---------- search ---------- */
   H.onSearchSubmit = null; /* homepage overrides to show results in-page */
-  H.onOpenQa = null;       /* homepage overrides to open the Q&A modal */
 
   function hideDrops() {
     document.querySelectorAll(".search-drop").forEach(function (d) { d.hidden = true; d.innerHTML = ""; });
@@ -194,7 +208,7 @@
       if (results.qa.length) {
         html += '<div class="drop-group"><h3>Questions &amp; Answers</h3>';
         results.qa.slice(0, 5).forEach(function (it) {
-          html += '<a class="drop-item" href="' + H.qaUrl(it.id) + '" data-open-qa="' + it.id + '">' +
+          html += '<a class="drop-item" href="' + H.qaUrl(it) + '">' +
             "<span>" + H.highlight(it.question, q) + '</span><span class="meta">' + H.esc(H.topicLabelList(it.topics)) + "</span></a>";
         });
         html += "</div>";
@@ -236,9 +250,7 @@
 
   var mobileMenu = document.getElementById("mobile-menu");
   document.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-open-qa]");
-    if (t && H.onOpenQa) { e.preventDefault(); hideDrops(); H.onOpenQa(t.getAttribute("data-open-qa")); return; }
-    t = e.target.closest("[data-open-results]");
+    var t = e.target.closest("[data-open-results]");
     if (t) { e.preventDefault(); submitSearch(H.visibleSearchInput().value); return; }
     t = e.target.closest("[data-open-menu]");
     if (t) { e.preventDefault(); mobileMenu.hidden = false; t.setAttribute("aria-expanded", "true"); return; }
@@ -255,16 +267,71 @@
     hideDrops();
   });
 
-  /* Topic chips markup, used by sheet pages and the homepage. */
-  H.chips = function (ids, asButtons) {
+  /* Topic chips markup, used by sheet and Q&A pages. */
+  H.chips = function (ids) {
     return (ids || []).map(function (tid) {
       var t = topicById[tid];
       if (!t) return "";
       var inner = H.esc(t.en) + ' <span lang="he" dir="rtl">' + H.esc(t.he) + "</span>";
-      return asButtons
-        ? '<button type="button" class="topic-chip" data-open-topic="' + t.id + '">' + inner + "</button>"
-        : '<a class="topic-chip" href="' + H.topicUrl(t.id) + '">' + inner + "</a>";
+      return '<a class="topic-chip" href="' + H.topicUrl(t.id) + '">' + inner + "</a>";
     }).join("");
+  };
+
+  /* Share box used by sheet and Q&A pages (Copy link, WhatsApp, Email, Print, native Share). */
+  H.shareBoxHtml = function (heading, shareText, url) {
+    return '<div class="share" id="share"><h2 class="sc">' + H.esc(heading) + "</h2>" +
+      '<button type="button" class="share-btn native" data-share="native" hidden>Share…</button>' +
+      '<button type="button" class="share-btn" data-share="copy"><span class="lbl">Copy link</span></button>' +
+      '<a class="share-btn" data-share="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(shareText + " " + url) + '">WhatsApp</a>' +
+      '<a class="share-btn" data-share="mail" href="mailto:?subject=' + encodeURIComponent(shareText) + "&body=" + encodeURIComponent(shareText + "\n\n" + url) + '">Email</a>' +
+      '<button type="button" class="share-btn" data-share="print">Print</button>' +
+      '<p class="share-status" role="status" aria-live="polite"></p></div>';
+  };
+  H.bindShare = function (root, shareText, url) {
+    var box = (root && root.querySelector) ? (root.querySelector(".share") || root) : root;
+    if (!box) return;
+    var status = box.querySelector(".share-status");
+    var nativeBtn = box.querySelector('[data-share="native"]');
+    if (navigator.share && nativeBtn) nativeBtn.hidden = false;
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-share]");
+      if (!b) return;
+      var kind = b.getAttribute("data-share");
+      if (kind === "native") {
+        e.preventDefault();
+        navigator.share({ title: shareText, text: shareText, url: url }).catch(function () {});
+      } else if (kind === "copy") {
+        e.preventDefault();
+        var done = function () {
+          b.classList.add("ok");
+          var lbl = b.querySelector(".lbl");
+          if (lbl) lbl.textContent = "Copied ✓";
+          if (status) status.textContent = "Link copied to the clipboard.";
+          setTimeout(function () {
+            b.classList.remove("ok");
+            if (lbl) lbl.textContent = "Copy link";
+            if (status) status.textContent = "";
+          }, 2200);
+        };
+        function fallback() {
+          var ta = document.createElement("textarea");
+          ta.value = url;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (err) {}
+          document.body.removeChild(ta);
+          done();
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, fallback);
+        else fallback();
+      } else if (kind === "print") {
+        e.preventDefault();
+        window.print();
+      }
+    });
   };
 
   /* Placeholder body for sheets that only have an excerpt (sample data). */

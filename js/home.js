@@ -2,31 +2,33 @@
 (function () {
   "use strict";
   var H = window.HYEW;
-  var qa = H.qa || [];
-  var topicById = H.topicById;
   var esc = H.esc;
 
   var params = new URLSearchParams(location.search);
+  var qaParam = params.get("qa");
+  if (qaParam) {
+    var oldQa = H.qaById(qaParam);
+    location.replace(oldQa ? H.qaUrl(oldQa) : (H.base + "qa.html?id=" + encodeURIComponent(qaParam)));
+    return;
+  }
+  var topicParam = params.get("topic");
+  if (topicParam) {
+    location.replace(H.topicUrl(topicParam));
+    return;
+  }
+
   var paperOpt = params.get("paper") || H.store.get("hyew-paper") || "rail";
   if (paperOpt !== "below") paperOpt = "rail";
-  var state = {
-    q: (params.get("q") || "").trim(),
-    topic: params.get("topic") || "",
-    qa: params.get("qa") || ""
-  };
+  var state = { q: (params.get("q") || "").trim() };
 
   var homeView = document.getElementById("home-view");
   var resultsView = document.getElementById("results-view");
-  var topicView = document.getElementById("topic-view");
-  var qaModal = document.getElementById("qa-modal");
 
   function setUrl() {
     var next = new URLSearchParams();
     next.set("search", H.getSearchOpt());
     next.set("paper", paperOpt);
     if (state.q) next.set("q", state.q);
-    if (state.topic) next.set("topic", state.topic);
-    if (state.qa) next.set("qa", state.qa);
     history.replaceState({}, "", location.pathname + "?" + next.toString() + location.hash);
   }
 
@@ -40,9 +42,9 @@
   }
 
   function showHome() {
-    homeView.hidden = false; resultsView.hidden = true; topicView.hidden = true;
+    homeView.hidden = false; resultsView.hidden = true;
     H.hideDrops();
-    state.q = ""; state.topic = "";
+    state.q = "";
     setUrl();
     window.scrollTo(0, 0);
   }
@@ -60,7 +62,7 @@
     else {
       html += '<ul class="result-list">';
       results.qa.forEach(function (it) {
-        html += '<li><a href="' + H.qaUrl(it.id) + '" data-open-qa="' + it.id + '"><span class="q">' + H.highlight(it.question, q) +
+        html += '<li><a href="' + H.qaUrl(it) + '"><span class="q">' + H.highlight(it.question, q) +
           '</span><span class="meta">' + esc(H.topicLabelList(it.topics)) + "</span>" + snip(it.answer, it.question, q) + "</a></li>";
       });
       html += "</ul>";
@@ -80,9 +82,9 @@
 
   function showResults(q) {
     q = (q || "").trim();
-    state.q = q; state.topic = "";
+    state.q = q;
     H.syncSearchInputs(q);
-    homeView.hidden = true; topicView.hidden = true; resultsView.hidden = false;
+    homeView.hidden = true; resultsView.hidden = false;
     H.hideDrops();
     setUrl();
     var sub = document.getElementById("results-sub");
@@ -96,49 +98,10 @@
     window.scrollTo(0, 0);
   }
 
-  function showTopic(id) {
-    var t = topicById[id];
-    if (!t) return;
-    closeModal();
-    homeView.hidden = true; resultsView.hidden = true; topicView.hidden = false;
-    H.hideDrops();
-    state.topic = id; state.q = "";
-    setUrl();
-    document.getElementById("topic-title").innerHTML = esc(t.en) + ' <span class="he" lang="he" dir="rtl">' + esc(t.he) + "</span>";
-    var tQa = qa.filter(function (it) { return (it.topics || []).indexOf(id) !== -1; });
-    var tSheets = H.sortedSheets().filter(function (it) { return (it.topics || []).indexOf(id) !== -1; });
-    document.getElementById("topic-body").innerHTML = renderGrouped({ qa: tQa, sheets: tSheets }, "");
-    window.scrollTo(0, 0);
-  }
-
-  function openQa(id) {
-    var it = qa.filter(function (x) { return x.id === id; })[0];
-    if (!it) return;
-    document.getElementById("qa-question").textContent = it.question;
-    var ans = document.getElementById("qa-answer");
-    ans.textContent = it.answer;
-    document.getElementById("qa-chips").innerHTML = H.chips(it.topics, true);
-    qaModal.hidden = false;
-    document.body.classList.add("modal-open");
-    state.qa = id;
-    setUrl();
-    if (H.gloss) { H.gloss.scan(document.getElementById("qa-question")); H.gloss.scan(ans); }
-    var heading = document.getElementById("qa-question");
-    heading.setAttribute("tabindex", "-1"); heading.focus();
-  }
-
-  function closeModal() {
-    if (qaModal.hidden) return;
-    qaModal.hidden = true;
-    document.body.classList.remove("modal-open");
-    state.qa = "";
-    setUrl();
-  }
-
   function renderTopics() {
     var groups = H.topicGroups || [];
     function item(t) {
-      return '<li><a class="topic" href="' + H.topicUrl(t.id) + '" data-open-topic="' + t.id + '">' +
+      return '<li><a class="topic" href="' + H.topicUrl(t.id) + '">' +
         '<span class="tx"><span class="en">' + esc(t.en) + "</span>" +
         '<span class="he" lang="he" dir="rtl">' + esc(t.he) + "</span></span>" +
         '<span class="ar" aria-hidden="true">→</span></a></li>';
@@ -173,18 +136,11 @@
   }
 
   H.onSearchSubmit = showResults;
-  H.onOpenQa = openQa;
 
   document.addEventListener("click", function (e) {
-    var t = e.target.closest("[data-open-topic]");
-    if (t) { e.preventDefault(); showTopic(t.getAttribute("data-open-topic")); return; }
-    t = e.target.closest("[data-go-home]");
+    var t = e.target.closest("[data-go-home]");
     if (t) { e.preventDefault(); showHome(); return; }
-    t = e.target.closest("[data-close-modal]");
-    if (t) { e.preventDefault(); closeModal(); return; }
-    if (e.target === qaModal) closeModal();
   });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeModal(); });
 
   document.querySelectorAll('input[name="opt-search"]').forEach(function (el) {
     el.addEventListener("change", function () { H.setSearchOpt(el.value); applyLayout(); });
@@ -220,7 +176,5 @@
   renderFeatured();
   applyLayout();
 
-  if (state.q && !state.topic) showResults(state.q);
-  else if (state.topic) showTopic(state.topic);
-  if (state.qa) openQa(state.qa);
+  if (state.q) showResults(state.q);
 })();

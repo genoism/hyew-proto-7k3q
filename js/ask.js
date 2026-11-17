@@ -4,6 +4,22 @@
   "use strict";
   var form = document.getElementById("ask-form");
   if (!form) return;
+  var follow = new URLSearchParams(location.search).get("followup");
+  if (follow) {
+    var src = (window.HYEW && HYEW.qaById) ? HYEW.qaById(follow) : null;
+    var subject = form.elements.subject;
+    var question = form.elements.question;
+    if (subject) {
+      var want = "A halachic question";
+      var has = Array.prototype.some.call(subject.options, function (o) { return o.value === want || o.text === want; });
+      if (has) subject.value = want;
+    }
+    if (question && !question.value.trim()) {
+      var ref = src ? "“" + src.question + "”" : "a published question";
+      question.value = "Follow-up to " + ref + ":\n\n";
+      try { question.setSelectionRange(question.value.length, question.value.length); } catch (e) {}
+    }
+  }
   var status = document.getElementById("f-status");
   var rules = {
     name: function (v) { return v.trim().length > 0; },

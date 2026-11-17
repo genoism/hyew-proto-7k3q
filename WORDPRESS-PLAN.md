@@ -8,7 +8,7 @@ Recommended hosting: WordPress.com (Personal plan or higher). Per WordPress.com'
 
 Two custom post types, registered in `functions.php`:
 
-- `qa` — one post per question. Post title = the question. Post content = the answer. Public, has an archive, `show_in_rest` true, `exclude_from_search` false. Permalinks such as `/questions/does-bottled-water-need-a-hechsher/`.
+- `qa` — one post per question. Post title = the question. Post content = the answer. Public, has an archive, `show_in_rest` true, `exclude_from_search` false. Rewrite slug `qa`, so permalinks are `/qa/can-you-set-a-timer-on-shabbos/` (generated from the question’s words).
 - `parsha_sheet` — one post per weekly HYEW paper. Title = the paper’s question-title. Content = the body of the paper. Post meta (registered with `register_post_meta`): `issue_number`, `parsha`, `hebrew_year`, `week_of`, `sponsor_line`. Public, has an archive, searchable. Permalinks such as `/papers/why-we-wait-six-hours/`.
 
 One shared flat taxonomy, `topic`, attached to both post types:
@@ -63,8 +63,8 @@ Store the full paper body as post content so homepage excerpts, the single-paper
 ## Theme templates (map from this prototype)
 
 - `front-page.php` — topic grid (all `topic` terms, English name + `hebrew_name` meta) and the featured `parsha_sheet`. Layout options (search in the header vs. below; paper in a rail vs. below) can be theme-mod settings if you want to keep the choice; otherwise pick one after review.
-- `taxonomy-topic.php` — that topic’s Q&As and papers, in the same two labeled groups.
-- `single-qa.php` — question, answer, and clickable topic chips (term links).
+- `taxonomy-topic.php` — that topic’s Q&As only (`pre_get_posts` limits the query to the `qa` post type; parsha sheets do not appear on topic archives). English name with the Hebrew term meta beneath, then a list of questions linking to `single-qa.php`. No per-topic counts.
+- `single-qa.php` — breadcrumb (Home › first topic), question as the title, answer, clickable topic chips (term links), the same share-box partial used on `single-parsha_sheet.php` (native Share…, Copy link, WhatsApp, Email, Print), a “More questions on [topic]” list for each of the post’s topics (up to about five each, excluding the current post and deduped), and an “Ask a follow-up question” link to the Ask page that prefills the form with a reference to this question. Print stylesheet prints just the Q&A.
 - `single-parsha_sheet.php` — see “Parsha sheets: taxonomy, archive, single, sharing” below.
 - `search.php` — grouped results, as above.
 - `archive-qa.php` / `archive-parsha_sheet.php` if useful.
@@ -78,8 +78,8 @@ Store the full paper body as post content so homepage excerpts, the single-paper
 - **Archive page** (`archive-parsha_sheet.php`, `/parsha-sheets/`): loops the five parent terms and their children (`get_terms` with `parent`, ordered by `menu_order` meta). A parsha with no sheets (`count === 0`) is still listed, styled muted.
 - **`taxonomy-parsha.php`** (`/parsha/lech-lecha/`): all sheets on that parsha, newest first, with previous/next parsha links.
 - **`single-parsha_sheet.php`** (`/papers/<slug>/`): masthead, title, full body with footnotes and bottom line, topic chips (`get_the_terms( …, 'topic' )`), parsha + date meta, `previous_post_link` / `next_post_link`, and a “More on Parshas X” `WP_Query` on the same parsha term excluding the current post. The homepage featured sheet, past weeks, search results and topic archives all link to this permalink (no modal).
-- **Share links, no plugin:** plain links built in the template with `rawurlencode( get_permalink() )`: WhatsApp (`https://wa.me/?text=`), email (`mailto:?subject=&body=`), print (`window.print()`), plus a ~30-line theme JS for Copy link (Clipboard API with a fallback) and the Web Share API (`navigator.share`) when the browser supports it. No third-party scripts or tracking.
-- **Print stylesheet** in the theme so a sheet prints as the single paper.
+- **Share links, no plugin:** a shared theme partial (`share-box.php`) used on both `single-parsha_sheet.php` and `single-qa.php`. Plain links built with `rawurlencode( get_permalink() )`: WhatsApp (`https://wa.me/?text=`), email (`mailto:?subject=&body=`), print (`window.print()`), plus a ~30-line theme JS for Copy link (Clipboard API with a fallback) and the Web Share API (`navigator.share`) when the browser supports it. No third-party scripts or tracking.
+- **Print stylesheet** in the theme so a sheet prints as the single paper, and a Q&A page prints as just the question and answer.
 
 ## Glossary of transliterated terms (no plugin)
 

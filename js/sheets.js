@@ -93,13 +93,7 @@
           '<div class="meta-block"><h2 class="sc">Parsha</h2><p><a href="' + H.parshaUrl(ps.slug) + '">Parshas ' + esc(ps.en) + ' <span lang="he" dir="rtl">' + esc(ps.he) + "</span></a></p>" +
             '<h2 class="sc">Date</h2><p>Shabbos, ' + esc(H.fmtDate(s.date)) + "<br>" + esc(s.year) + " · No. " + s.number + "</p>" +
             '<h2 class="sc">Topics</h2><div class="topic-chips">' + H.chips(s.topics, false) + "</div></div>" +
-          '<div class="share" id="share"><h2 class="sc">Share this sheet</h2>' +
-            '<button type="button" class="share-btn native" data-share="native" hidden>Share…</button>' +
-            '<button type="button" class="share-btn" data-share="copy"><span class="lbl">Copy link</span></button>' +
-            '<a class="share-btn" data-share="wa" target="_blank" rel="noopener" href="https://wa.me/?text=' + encodeURIComponent(shareText + " " + url) + '">WhatsApp</a>' +
-            '<a class="share-btn" data-share="mail" href="mailto:?subject=' + encodeURIComponent(shareText) + "&body=" + encodeURIComponent(shareText + "\n\n" + url) + '">Email</a>' +
-            '<button type="button" class="share-btn" data-share="print">Print</button>' +
-            '<p class="share-status" role="status" aria-live="polite"></p></div>' +
+          H.shareBoxHtml("Share this sheet", shareText, url) +
         "</aside>" +
       "</div>" +
       '<nav class="pn sheet-pn" aria-label="More sheets">' +
@@ -111,34 +105,6 @@
           : '<p class="empty">This is the only sheet on Parshas ' + esc(ps.en) + ' so far. <a class="u" href="parsha-sheets.html">Browse all parshiyos</a>.</p>') +
       "</section>";
 
-    var status = main.querySelector(".share-status");
-    var nativeBtn = main.querySelector('[data-share="native"]');
-    if (navigator.share) nativeBtn.hidden = false;
-    main.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-share]");
-      if (!b) return;
-      var kind = b.getAttribute("data-share");
-      if (kind === "native") {
-        e.preventDefault();
-        navigator.share({ title: shareText, text: shareText, url: url }).catch(function () {});
-      } else if (kind === "copy") {
-        e.preventDefault();
-        var done = function () {
-          b.classList.add("ok"); b.querySelector(".lbl").textContent = "Copied ✓";
-          status.textContent = "Link copied to the clipboard.";
-          setTimeout(function () { b.classList.remove("ok"); b.querySelector(".lbl").textContent = "Copy link"; status.textContent = ""; }, 2200);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, fallback);
-        else fallback();
-        function fallback() {
-          var ta = document.createElement("textarea"); ta.value = url; ta.setAttribute("readonly", "");
-          ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select();
-          try { document.execCommand("copy"); } catch (err) {}
-          document.body.removeChild(ta); done();
-        }
-      } else if (kind === "print") {
-        e.preventDefault(); window.print();
-      }
-    });
+    H.bindShare(main, shareText, url);
   }
 })();
