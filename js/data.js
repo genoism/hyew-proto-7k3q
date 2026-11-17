@@ -452,60 +452,60 @@ HYEW.sheets = [
     id: "146", number: 146, parsha: "toldos", year: "5787", date: "2026-11-14",
     title: "…why we cover our eyes for the first pasuk of Shema?",
     topics: ["tefillah", "hashkafa"],
-    excerpt: "A familiar motion: the right hand rises, the eyes are covered, and the first pasuk of Krias Shema is said. Sample excerpt (placeholder): this week’s paper would look at why the custom took hold, and what kavanah it is meant to help us have in those few seconds."
+    excerpt: "A familiar motion: the right hand rises, the eyes are covered, and the first pasuk of Krias Shema is said. This week’s paper would look at why the custom took hold, and what kavanah it is meant to help us have in those few seconds."
   },
   {
     id: "145", number: 145, parsha: "chayei-sarah", year: "5787", date: "2026-11-07",
     title: "…why we break a glass under the chuppah?",
     topics: ["life-cycle", "marital-family"],
-    excerpt: "The ceremony ends with a sharp sound and a mazel tov. Sample excerpt (placeholder): this week’s paper would look at why a glass is broken under the chuppah, and what the minhag is meant to recall."
+    excerpt: "The ceremony ends with a sharp sound and a mazel tov. This week’s paper would look at why a glass is broken under the chuppah, and what the minhag is meant to recall."
   },
   {
     id: "144", number: 144, parsha: "vayeira", year: "5787", date: "2026-10-31",
     title: "…whether bottled water needs a hechsher?",
     topics: ["kashrus", "daily-living"],
-    excerpt: "A plastic bottle from a rest-stop cooler seems simple enough. Sample excerpt (placeholder): this week’s paper would distinguish plain water from flavored drinks, when a hechsher is usually sought, and which brocha rishona and brocha achronah apply."
+    excerpt: "A plastic bottle from a rest-stop cooler seems simple enough. This week’s paper would distinguish plain water from flavored drinks, when a hechsher is usually sought, and which brocha rishona and brocha achronah apply."
   },
   {
     id: "143", number: 143, parsha: "lech-lecha", year: "5787", date: "2026-10-24",
     title: "…when Tefillas HaDerech is said on a flight?",
     topics: ["tefillah", "daily-living"],
-    excerpt: "The seatbelt sign goes off, and a few passengers stand to daven. Sample excerpt (placeholder): this week’s paper would look at when Tefillas HaDerech is said on a journey, and how a flight compares to a drive out of the city."
+    excerpt: "The seatbelt sign goes off, and a few passengers stand to daven. This week’s paper would look at when Tefillas HaDerech is said on a journey, and how a flight compares to a drive out of the city."
   },
   {
     id: "142", number: 142, parsha: "noach", year: "5787", date: "2026-10-17",
     title: "…whether you may open an umbrella on Shabbos?",
     topics: ["shabbos"],
-    excerpt: "A sudden rain, a fold-up umbrella in the coat closet — and a pause at the door. Sample excerpt (placeholder): this week’s paper would set out why opening an umbrella is commonly avoided on Shabbos, how it relates to the melachos and to muktzeh, and what people do instead."
+    excerpt: "A sudden rain, a fold-up umbrella in the coat closet — and a pause at the door. This week’s paper would set out why opening an umbrella is commonly avoided on Shabbos, how it relates to the melachos and to muktzeh, and what people do instead."
   },
   {
     id: "141", number: 141, parsha: "bereishis", year: "5787", date: "2026-10-10",
     title: "…why Havdalah is made over a flame?",
     topics: ["shabbos", "brachos"],
-    excerpt: "The candle is lit, the fingers are raised toward its light, and a bracha is said. Sample excerpt (placeholder): this week’s paper would explain the bracha of borei me’orei ha’eish at Motzaei Shabbos, and why we look at our fingernails by its light."
+    excerpt: "The candle is lit, the fingers are raised toward its light, and a bracha is said. This week’s paper would explain the bracha of borei me’orei ha’eish at Motzaei Shabbos, and why we look at our fingernails by its light."
   },
   {
     id: "140", number: 140, parsha: "haazinu", year: "5787", date: "2026-09-19",
     title: "…why a sukkah may not stand beneath a tree?",
     topics: ["yom-tov"],
-    excerpt: "The sechach must be the roof, and the sky must be above it. Sample excerpt (placeholder): this week’s paper would explain why branches of a tree overhead are a problem, and which cases can still be used l’chatchilah or b’dieved."
+    excerpt: "The sechach must be the roof, and the sky must be above it. This week’s paper would explain why branches of a tree overhead are a problem, and which cases can still be used l’chatchilah or b’dieved."
   },
   {
     id: "91", number: 91, parsha: "lech-lecha", year: "5786", date: "2025-11-01",
     title: "…whether ma’aser may be given from a gift?",
     topics: ["tzedakah", "monetary"],
-    excerpt: "Avraham Avinu gave a tenth to Malki-Tzedek — but what of money that arrives as a gift? Sample excerpt (placeholder): this paper would look at which income is included in ma’aser kesafim, and how gifts and inheritances are treated."
+    excerpt: "Avraham Avinu gave a tenth to Malki-Tzedek — but what of money that arrives as a gift? This paper would look at which income is included in ma’aser kesafim, and how gifts and inheritances are treated."
   },
   {
     id: "90", number: 90, parsha: "noach", year: "5786", date: "2025-10-25",
     title: "…what bracha is said on seeing a rainbow?",
     topics: ["brachos", "hashkafa"],
-    excerpt: "After the storm, a rainbow over the parking lot. Sample excerpt (placeholder): this paper would set out the bracha said on seeing a rainbow, and why some are careful not to point it out to others."
+    excerpt: "After the storm, a rainbow over the parking lot. This paper would set out the bracha said on seeing a rainbow, and why some are careful not to point it out to others."
   },
   {
     id: "39", number: 39, parsha: "lech-lecha", year: "5785", date: "2024-11-09",
     title: "…why a bris is performed on Shabbos?",
     topics: ["life-cycle", "shabbos"],
-    excerpt: "The bris milah of a baby born the Shabbos before is done on Shabbos itself. Sample excerpt (placeholder): this paper would look at why a bris on its proper day overrides Shabbos, and when a bris that has been pushed off does not."
+    excerpt: "The bris milah of a baby born the Shabbos before is done on Shabbos itself. This paper would look at why a bris on its proper day overrides Shabbos, and when a bris that has been pushed off does not."
   }
 ];

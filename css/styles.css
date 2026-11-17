@@ -9,7 +9,7 @@ img { max-width: 100%; height: auto; }
   --ink: #2A2420;
   --rule: #2A242033;
   --red: #8E2A1B;
-  --mut: #67625C; /* was #6E6862 (4.23:1 on --pg); now 4.64:1 on --pg, 5.18:1 on --sheet */
+  --mut: #504A44; /* was #67625C (4.64:1 on --pg); now 6.72:1 on --pg (≈6.7:1), 7.49:1 on --sheet */
   --wrap: 1240px;
 }
 
@@ -1226,7 +1226,7 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 }
 .gl-tip[hidden] { display: none; }
 .gl-he { font: 500 25px/1.2 "Frank Ruhl Libre", serif; color: var(--red); text-align: right; direction: rtl; }
-.gl-term { font: 500 11px/1.2 "IBM Plex Sans Condensed", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: #5E5953; margin: 6px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+.gl-term { font: 500 11px/1.2 "IBM Plex Sans Condensed", sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--mut); margin: 6px 0 0; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
 .gl-def { margin: 8px 0 0; font: 500 17.5px/1.45 "Cormorant Garamond", serif; color: #221C18; }
 .gl-ar { position: absolute; top: -7px; width: 12px; height: 12px; margin-left: -6px; background: #FBF8F1; border-left: 1px solid var(--ink); border-top: 1px solid var(--ink); transform: rotate(45deg); }
 .gl-tip.above .gl-ar { top: auto; bottom: -7px; transform: rotate(225deg); }
