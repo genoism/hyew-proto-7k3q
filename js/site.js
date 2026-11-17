@@ -179,7 +179,11 @@
     '<a class="skip" href="#main">Skip to content</a>' +
     '<header class="site">' +
       '<button class="menu-btn sc" type="button" aria-controls="mobile-menu" aria-expanded="false" data-open-menu>' +
-        '<span class="menu-ic" aria-hidden="true"><span></span><span></span><span></span></span>' +
+        '<svg class="menu-ic" viewBox="0 0 18 14" width="18" height="14" aria-hidden="true" focusable="false" shape-rendering="crispEdges">' +
+          '<rect class="b1" x="0" y="0" width="18" height="2" fill="currentColor"/>' +
+          '<rect class="b2" x="0" y="6" width="18" height="2" fill="currentColor"/>' +
+          '<rect class="b3" x="0" y="12" width="18" height="2" fill="currentColor"/>' +
+        "</svg>" +
         '<span class="menu-lbl">Menu</span></button>' +
       '<nav class="nav-l sc" aria-label="Primary">' +
         nav("index.html", "Home", "home") + nav("pages/about.html", "About", "about") + nav("haskamos.html", "Haskamos", "haskamos") +
