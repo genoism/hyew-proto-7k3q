@@ -132,7 +132,6 @@
       "</nav>" +
     "</header>" +
     '<div class="search-band"><div class="wrap"><div class="search" data-search-root="below">' +
-      '<p class="kicker sc">Search answers and parsha sheets</p>' +
       '<form class="search-field" role="search" action="' + base + 'index.html">' +
         '<label class="vh" for="q-below">Search questions and parsha sheets</label>' +
         '<input id="q-below" type="search" name="q" placeholder="Ask a word, a topic, a question…" autocomplete="off" aria-controls="drop-below">' +
