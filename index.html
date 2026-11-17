@@ -3,54 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Have You Ever Wondered — Halacha</title>
+  <title>Have You Ever Wondered</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Frank+Ruhl+Libre:wght@400;500;700;900&family=IBM+Plex+Sans+Condensed:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-search="below" data-paper="rail">
-  <a class="skip" href="#main">Skip to content</a>
-
-  <header class="site">
-    <button class="menu-btn sc" type="button" aria-controls="mobile-menu" aria-expanded="false" data-open-menu>Menu</button>
-    <nav class="nav-l sc" aria-label="Primary">
-      <a href="index.html">Home</a>
-      <a href="pages/about.html">About</a>
-      <a href="pages/haskamos.html">Haskamos</a>
-    </nav>
-    <a class="brand" href="index.html">
-      <b>Have You Ever Wondered</b>
-      <i>halacha</i>
-    </a>
-    <div class="search search-in-header" data-search-root="header">
-      <form class="search-field" role="search" action="index.html">
-        <label class="visually-hidden sc" for="q-header" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search questions and weekly papers</label>
-        <input id="q-header" type="search" name="q" placeholder="Search questions and weekly papers…" autocomplete="off" aria-autocomplete="list" aria-controls="drop-header">
-        <button type="submit" class="sc">Search</button>
-      </form>
-      <div class="search-drop" id="drop-header" hidden role="listbox" aria-label="Search suggestions"></div>
-    </div>
-    <nav class="nav-r sc" aria-label="Secondary">
-      <a href="index.html#topics">Topics</a>
-      <a href="pages/ask.html">Ask a Question</a>
-      <a class="don" href="pages/donate.html">Donate</a>
-    </nav>
-  </header>
-
-  <div class="search-band">
-    <div class="wrap">
-      <div class="search" data-search-root="below">
-        <p class="kicker sc">Search answers and weekly papers</p>
-        <form class="search-field" role="search" action="index.html">
-          <label class="visually-hidden" for="q-below" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search questions and weekly papers</label>
-          <input id="q-below" type="search" name="q" placeholder="Ask a word, a topic, a question…" autocomplete="off" aria-autocomplete="list" aria-controls="drop-below">
-          <button type="submit" class="sc">Search</button>
-        </form>
-        <div class="search-drop" id="drop-below" hidden role="listbox" aria-label="Search suggestions"></div>
-      </div>
-    </div>
-  </div>
+<body data-page="home" data-base="" data-search="below" data-paper="rail">
+  <div id="site-header"></div>
 
   <main id="main">
     <div class="wrap">
@@ -63,44 +23,7 @@
             <div class="topics-index" id="topics-grid"></div>
           </section>
           <div class="paper-slot">
-            <article class="paper" id="featured-paper" aria-labelledby="paper-title">
-              <div class="mast">
-                <div class="row sc"><span>No. 47</span><span>בס״ד</span><span>Parshas Lech Lecha · 5787</span></div>
-                <div class="t">Have You Ever Wondered<span>…</span></div>
-                <div class="sub">HALACHA</div>
-              </div>
-              <h2 id="paper-title">…why we wait six hours between meat and milk<em>?</em></h2>
-              <div class="byline sc">Kashrus · Week of 3 November 2026</div>
-              <div class="spline">This week’s paper is sponsored l’iluy nishmas [Name] · <a class="u" href="pages/sponsor.html">Sponsor the next one</a></div>
-              <div class="cols">
-                <p class="dc">Most of us learned the rule as small children: after a fleishig meal, we wait six hours before eating anything milchig. Yet the Torah says nothing of a wait, and the Gemara records only the practice of Mar Ukva, who waited “from one meal to the next.”<sup>1</sup> How did that become six hours — and why do some families wait one, or three?</p>
-                <h3>Two reasons, two approaches</h3>
-                <p>Rashi understands the wait as a measure of time: the span that separated the morning and evening meals of the Talmudic era.<sup>2</sup> The Rambam offers a physical reason — meat lodged between the teeth retains its taste for roughly six hours.<sup>3</sup> The Shulchan Aruch rules six hours, citing both explanations, and this is the prevalent practice today.<sup>4</sup></p>
-                <p class="q">Q: If I only chewed meat for a baby, and didn’t swallow, must I wait?</p>
-                <p>Here the two reasons diverge. According to the Rambam, meat in the mouth is the concern, so chewing alone would require a wait; according to Rashi, one who did not eat a meal has nothing to wait for.<sup>5</sup> The Shach rules stringently, in deference to both.<sup>6</sup></p>
-                <div class="bl">
-                  <b>Bottom line</b>
-                  <ul>
-                    <li>Wait six hours after meat before dairy.</li>
-                    <li>Chewing without swallowing — also wait.</li>
-                    <li>Follow an established family minhag of one or three hours.</li>
-                    <li>Ask your rav about children and illness.</li>
-                  </ul>
-                </div>
-                <h3>Where the one-hour minhag comes from</h3>
-                <p>The Rema records a custom to wait one hour, recite a berachah acharonah, and clean the mouth — a practice preserved in many Dutch and German communities.<sup>7</sup> Those who keep it are following a legitimate opinion, not a leniency…</p>
-                <div class="fn">
-                  <p><sup>1</sup>Chullin 105a.</p>
-                  <p><sup>2</sup>Rashi, ibid., s.v. l’seudasa.</p>
-                  <p><sup>3</sup>Rambam, Hil. Ma’achalos Asuros 9:28.</p>
-                  <p><sup>4</sup>Shulchan Aruch, Y.D. 89:1.</p>
-                  <p><sup>5</sup>See Pri Megadim, Sifsei Da’as 89:1.</p>
-                  <p><sup>6</sup>Shach, Y.D. 89:2.</p>
-                  <p><sup>7</sup>Rema, ibid.; Darchei Moshe 89:2.</p>
-                </div>
-              </div>
-              <div class="fade"><button type="button" class="sc" data-open-sheet="sheet-47">Read the full paper →</button></div>
-            </article>
+            <article class="paper" id="featured-paper" aria-labelledby="sheet-title"></article>
             <aside class="side">
               <h4>Past weeks</h4>
               <ul class="past" id="past-weeks"></ul>
@@ -146,8 +69,7 @@
 
         <section class="hask">
           <div class="sc">Haskamos</div>
-          <div><b>Rabbi Moshe Heinemann</b> — <i>[placeholder excerpt of the haskama]</i> <a class="u sc" href="pages/haskamos.html">Read</a></div>
-          <div><b>Rabbi Shmuel Kamenetzky</b> — <i>[placeholder excerpt of the haskama]</i> <a class="u sc" href="pages/haskamos.html">Read</a></div>
+          <div>With the haskamos of <b>Rav Shmuel Kamenetzky</b> <i>shlita</i>, <b>Rav Moshe Heinemann</b> <i>shlita</i>, and <b>Rav Sholom Kamenetzky</b> <i>shlita</i>. <a class="u sc" href="haskamos.html">Read the haskamos</a></div>
         </section>
       </div>
 
@@ -171,59 +93,16 @@
     </div>
   </main>
 
-  <footer class="site sc">
-    <div>
-      <span class="foot-brand">Have You Ever Wondered</span>
-      <span class="foot-sub">A weekly halacha paper.</span>
-    </div>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="pages/about.html">About</a>
-      <a href="pages/haskamos.html">Haskamos</a>
-      <a href="index.html#topics">Topics</a>
-    </div>
-    <div>
-      <a href="pages/ask.html">Ask a Question</a>
-      <a href="pages/subscribe.html">Subscribe</a>
-      <a href="pages/donate.html">Donate</a>
-      <a href="pages/sponsor.html">Sponsor the next HYEW</a>
-    </div>
-    <div style="line-height:2.1">Written b’zchus a refuah shleimah for [Name]<br>© 2026 · HYEWhalacha.com</div>
-  </footer>
+  <div id="site-footer"></div>
 
   <div class="modal-back" id="qa-modal" hidden>
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="qa-question">
       <button type="button" class="close" data-close-modal>Close</button>
       <div class="topic-chips" id="qa-chips"></div>
-      <h2 id="qa-question"></h2>
-      <p class="answer" id="qa-answer"></p>
+      <h2 id="qa-question" class="gl-scope"></h2>
+      <p class="answer gl-scope" id="qa-answer"></p>
       <p class="disclaimer">Sample placeholder — not a psak. Please ask your rav for a personal ruling.</p>
     </div>
-  </div>
-
-  <div class="modal-back" id="sheet-modal" hidden>
-    <div class="modal sheet-modal" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-      <button type="button" class="close" data-close-modal>Close</button>
-      <div class="topic-chips" id="sheet-chips"></div>
-      <div class="paper-body" id="sheet-body"></div>
-    </div>
-  </div>
-
-  <div class="mobile-menu" id="mobile-menu" hidden>
-    <div class="mm-top">
-      <a class="brand" href="index.html"><b>Have You Ever Wondered</b><i>halacha</i></a>
-      <button type="button" class="mm-close" data-close-menu>Close</button>
-    </div>
-    <nav aria-label="Mobile">
-      <a href="index.html">Home</a>
-      <a href="index.html#topics">Topics</a>
-      <a href="pages/about.html">About</a>
-      <a href="pages/haskamos.html">Haskamos</a>
-      <a href="pages/ask.html">Ask a Question</a>
-      <a href="pages/subscribe.html">Subscribe</a>
-      <a href="pages/donate.html">Donate</a>
-      <a href="pages/sponsor.html">Sponsor the next HYEW</a>
-    </nav>
   </div>
 
   <aside class="proto" id="proto" aria-label="Prototype options">
@@ -243,6 +122,9 @@
   </aside>
 
   <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/glossary.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/glossary-ui.js"></script>
 </body>
 </html>

@@ -42,7 +42,7 @@ HYEW.qa = [
   {
     id: "qa-01",
     question: "If I only tasted meat and did not swallow, must I wait before eating dairy?",
-    answer: "Sample answer (placeholder, not a psak): This is a commonly asked kashrus question. A full answer would distinguish between tasting, chewing, and swallowing, and would note that family custom and a rav’s guidance matter. Please ask your rav for a personal ruling.",
+    answer: "Sample answer (placeholder, not a psak): This is a commonly asked kashrus question. A full answer would distinguish between tasting, chewing, and swallowing, whether less than a kezayis makes a difference, and would note that family minhag and a rav’s guidance matter. Please ask your rav for a personal ruling.",
     topics: ["kashrus"]
   },
   {
@@ -54,7 +54,7 @@ HYEW.qa = [
   {
     id: "qa-03",
     question: "Can Kiddush be recited over grape juice?",
-    answer: "Sample answer (placeholder, not a psak): Grape juice is widely used for Kiddush. A full answer would address whether wine is preferred, when juice is fully acceptable, and differences between Friday night and the day meal. Please ask your rav for a personal ruling.",
+    answer: "Sample answer (placeholder, not a psak): Grape juice is widely used for Kiddush. A full answer would address whether wine is preferred l’chatchilah, how much must be drunk (a revi’is or less), when juice is fully acceptable, and which berachah acharonah follows it. Please ask your rav for a personal ruling.",
     topics: ["shabbos", "yom-tov"]
   },
   {
@@ -191,67 +191,127 @@ HYEW.qa = [
   }
 ];
 
+/* Chumashim and parshiyos, in order (54). Combined parshiyos
+ * (Vayakhel-Pekudei, Nitzavim-Vayeilech, etc.) are listed separately. */
+HYEW.books = [
+  { id: "bereishis", en: "Bereishis", he: "בראשית", parshiyos: [
+    ["bereishis","Bereishis","בראשית"],["noach","Noach","נח"],["lech-lecha","Lech Lecha","לך לך"],
+    ["vayeira","Vayeira","וירא"],["chayei-sarah","Chayei Sarah","חיי שרה"],["toldos","Toldos","תולדות"],
+    ["vayeitzei","Vayeitzei","ויצא"],["vayishlach","Vayishlach","וישלח"],["vayeishev","Vayeishev","וישב"],
+    ["mikeitz","Mikeitz","מקץ"],["vayigash","Vayigash","ויגש"],["vayechi","Vayechi","ויחי"] ] },
+  { id: "shemos", en: "Shemos", he: "שמות", parshiyos: [
+    ["shemos","Shemos","שמות"],["vaeira","Va’eira","וארא"],["bo","Bo","בא"],["beshalach","Beshalach","בשלח"],
+    ["yisro","Yisro","יתרו"],["mishpatim","Mishpatim","משפטים"],["terumah","Terumah","תרומה"],
+    ["tetzaveh","Tetzaveh","תצוה"],["ki-sisa","Ki Sisa","כי תשא"],["vayakhel","Vayakhel","ויקהל"],
+    ["pekudei","Pekudei","פקודי"] ] },
+  { id: "vayikra", en: "Vayikra", he: "ויקרא", parshiyos: [
+    ["vayikra","Vayikra","ויקרא"],["tzav","Tzav","צו"],["shemini","Shemini","שמיני"],["tazria","Tazria","תזריע"],
+    ["metzora","Metzora","מצורע"],["acharei-mos","Acharei Mos","אחרי מות"],["kedoshim","Kedoshim","קדושים"],
+    ["emor","Emor","אמור"],["behar","Behar","בהר"],["bechukosai","Bechukosai","בחקתי"] ] },
+  { id: "bamidbar", en: "Bamidbar", he: "במדבר", parshiyos: [
+    ["bamidbar","Bamidbar","במדבר"],["nasso","Nasso","נשא"],["behaaloscha","Beha’aloscha","בהעלתך"],
+    ["shelach","Shelach","שלח"],["korach","Korach","קרח"],["chukas","Chukas","חקת"],["balak","Balak","בלק"],
+    ["pinchas","Pinchas","פינחס"],["matos","Matos","מטות"],["masei","Masei","מסעי"] ] },
+  { id: "devarim", en: "Devarim", he: "דברים", parshiyos: [
+    ["devarim","Devarim","דברים"],["vaeschanan","Va’eschanan","ואתחנן"],["eikev","Eikev","עקב"],
+    ["reeh","Re’eh","ראה"],["shoftim","Shoftim","שופטים"],["ki-seitzei","Ki Seitzei","כי תצא"],
+    ["ki-savo","Ki Savo","כי תבוא"],["nitzavim","Nitzavim","נצבים"],["vayeilech","Vayeilech","וילך"],
+    ["haazinu","Ha’azinu","האזינו"],["vzos-haberachah","V’zos HaBerachah","וזאת הברכה"] ] }
+];
+HYEW.parshaBySlug = {};
+HYEW.books.forEach(function (b) {
+  b.parshiyos = b.parshiyos.map(function (p) {
+    var o = { slug: p[0], en: p[1], he: p[2], book: b.id };
+    HYEW.parshaBySlug[o.slug] = o;
+    return o;
+  });
+});
+
+/* Full sample body of the featured paper (No. 147). Other sheets get a
+ * clearly-labelled placeholder body built from their excerpt (see site.js). */
+var FEATURED_BODY = [
+  '<p class="dc">Most of us learned the rule as small children: after a fleishig meal, we wait six hours before eating anything milchig. Yet the Torah says nothing of a wait, and the Gemara records only the practice of Mar Ukva, who waited “from one meal to the next.”<sup>1</sup> How did that become six hours — and why do some families wait one, or three?</p>',
+  '<h3>Two reasons, two approaches</h3>',
+  '<p>Rashi understands the wait as a measure of time: the span that separated the morning and evening meals of the Talmudic era.<sup>2</sup> The Rambam offers a physical reason — meat lodged between the teeth retains its taste for roughly six hours.<sup>3</sup> The Shulchan Aruch rules six hours, citing both explanations, and this is the prevalent practice today.<sup>4</sup></p>',
+  '<p class="q">Q: If I only chewed meat for a baby, and didn’t swallow, must I wait?</p>',
+  '<p>Here the two reasons diverge. According to the Rambam, meat in the mouth is the concern, so chewing alone would require a wait; according to Rashi, one who did not eat a meal has nothing to wait for.<sup>5</sup> The Shach rules stringently, in deference to both.<sup>6</sup></p>',
+  '<div class="bl"><b>Bottom line</b><ul><li>Wait six hours after meat before dairy.</li><li>Chewing without swallowing — also wait.</li><li>Follow an established family minhag of one or three hours.</li><li>Ask your rav about children and illness.</li></ul></div>',
+  '<h3>Where the one-hour minhag comes from</h3>',
+  '<p>The Rema records a custom to wait one hour, recite a berachah acharonah, and clean the mouth — a practice preserved in many Dutch and German communities.<sup>7</sup> Those who keep it are following a legitimate opinion, not a leniency.</p>',
+  '<p>Sample text (placeholder): the full paper would go on to discuss what counts as a fleishig meal, whether pareve food cooked in a fleishig pot requires a wait, whether the bracha achrona must be said before the wait begins, and how a safek is treated l’chatchilah and b’dieved.</p>',
+  '<div class="fn"><p><sup>1</sup>Chullin 105a.</p><p><sup>2</sup>Rashi, ibid., s.v. l’seudasa.</p><p><sup>3</sup>Rambam, Hil. Ma’achalos Asuros 9:28.</p><p><sup>4</sup>Shulchan Aruch, Y.D. 89:1.</p><p><sup>5</sup>See Pri Megadim, Sifsei Da’as 89:1.</p><p><sup>6</sup>Shach, Y.D. 89:2.</p><p><sup>7</sup>Rema, ibid.; Darchei Moshe 89:2.</p></div>'
+].join("");
+
+/* Sheets: id, issue number, parsha slug, Hebrew year, Shabbos date (ISO).
+ * Dates are the real Shabbos of that parsha in that year. Content is SAMPLE. */
 HYEW.sheets = [
   {
-    id: "sheet-47",
-    number: 47,
+    id: "147", number: 147, parsha: "vayeitzei", year: "5787", date: "2026-11-21",
     title: "…why we wait six hours between meat and milk?",
-    parsha: "Lech Lecha",
-    year: "5787",
-    date: "Week of 3 November 2026",
     topics: ["kashrus"],
     sponsored: "This week’s paper is sponsored l’iluy nishmas [Name]",
     excerpt: "Most of us learned the rule as small children: after a fleishig meal, we wait six hours before eating anything milchig. Yet the Torah says nothing of a wait, and the Gemara records only the practice of Mar Ukva, who waited “from one meal to the next.” How did that become six hours — and why do some families wait one, or three?",
+    body: FEATURED_BODY,
     featured: true
   },
   {
-    id: "sheet-46",
-    number: 46,
+    id: "146", number: 146, parsha: "toldos", year: "5787", date: "2026-11-14",
     title: "…why we cover our eyes for the first pasuk of Shema?",
-    parsha: "Bereishis",
-    year: "5787",
-    date: "Week of 27 October 2026",
     topics: ["tefillah", "hashkafa"],
-    excerpt: "A familiar motion: the right hand rises, the eyes are covered, and the first verse of Shema is said. Sample excerpt (placeholder): this week’s paper would look at why the custom took hold, and what it is meant to help us do in those few seconds."
+    excerpt: "A familiar motion: the right hand rises, the eyes are covered, and the first pasuk of Krias Shema is said. Sample excerpt (placeholder): this week’s paper would look at why the custom took hold, and what kavanah it is meant to help us have in those few seconds."
   },
   {
-    id: "sheet-45",
-    number: 45,
-    title: "…why a sukkah may not stand beneath a tree?",
-    parsha: "Sukkos",
-    year: "5787",
-    date: "Week of 6 October 2026",
-    topics: ["yom-tov"],
-    excerpt: "The sechach must be the roof, and the sky must be above it. Sample excerpt (placeholder): this week’s paper would explain why branches of a tree overhead are a problem, and which cases can still be used."
-  },
-  {
-    id: "sheet-44",
-    number: 44,
-    title: "…whether you may open an umbrella on Shabbos?",
-    parsha: "Ha’azinu",
-    year: "5787",
-    date: "Week of 29 September 2026",
-    topics: ["shabbos"],
-    excerpt: "A sudden rain, a fold-up umbrella in the coat closet — and a pause at the door. Sample excerpt (placeholder): this week’s paper would set out why opening an umbrella is commonly avoided on Shabbos, and what people do instead."
-  },
-  {
-    id: "sheet-43",
-    number: 43,
+    id: "145", number: 145, parsha: "chayei-sarah", year: "5787", date: "2026-11-07",
     title: "…why we break a glass under the chuppah?",
-    parsha: "Vayeilech",
-    year: "5787",
-    date: "Week of 22 September 2026",
     topics: ["life-cycle", "marital-family"],
-    excerpt: "The ceremony ends with a sharp sound and a mazel tov. Sample excerpt (placeholder): this week’s paper would look at why a glass is broken under the chuppah, and what the custom is meant to recall."
+    excerpt: "The ceremony ends with a sharp sound and a mazel tov. Sample excerpt (placeholder): this week’s paper would look at why a glass is broken under the chuppah, and what the minhag is meant to recall."
   },
   {
-    id: "sheet-42",
-    number: 42,
+    id: "144", number: 144, parsha: "vayeira", year: "5787", date: "2026-10-31",
     title: "…whether bottled water needs a hechsher?",
-    parsha: "Nitzavim",
-    year: "5787",
-    date: "Week of 15 September 2026",
     topics: ["kashrus", "daily-living"],
-    excerpt: "A plastic bottle from a rest-stop cooler seems simple enough. Sample excerpt (placeholder): this week’s paper would distinguish plain water from flavored drinks, and when a hechsher is usually sought."
+    excerpt: "A plastic bottle from a rest-stop cooler seems simple enough. Sample excerpt (placeholder): this week’s paper would distinguish plain water from flavored drinks, when a hechsher is usually sought, and which brocha rishona and brocha achronah apply."
+  },
+  {
+    id: "143", number: 143, parsha: "lech-lecha", year: "5787", date: "2026-10-24",
+    title: "…when Tefillas HaDerech is said on a flight?",
+    topics: ["tefillah", "daily-living"],
+    excerpt: "The seatbelt sign goes off, and a few passengers stand to daven. Sample excerpt (placeholder): this week’s paper would look at when Tefillas HaDerech is said on a journey, and how a flight compares to a drive out of the city."
+  },
+  {
+    id: "142", number: 142, parsha: "noach", year: "5787", date: "2026-10-17",
+    title: "…whether you may open an umbrella on Shabbos?",
+    topics: ["shabbos"],
+    excerpt: "A sudden rain, a fold-up umbrella in the coat closet — and a pause at the door. Sample excerpt (placeholder): this week’s paper would set out why opening an umbrella is commonly avoided on Shabbos, how it relates to the melachos and to muktzeh, and what people do instead."
+  },
+  {
+    id: "141", number: 141, parsha: "bereishis", year: "5787", date: "2026-10-10",
+    title: "…why Havdalah is made over a flame?",
+    topics: ["shabbos", "brachos"],
+    excerpt: "The candle is lit, the fingers are raised toward its light, and a bracha is said. Sample excerpt (placeholder): this week’s paper would explain the bracha of borei me’orei ha’eish at Motzaei Shabbos, and why we look at our fingernails by its light."
+  },
+  {
+    id: "140", number: 140, parsha: "haazinu", year: "5787", date: "2026-09-19",
+    title: "…why a sukkah may not stand beneath a tree?",
+    topics: ["yom-tov"],
+    excerpt: "The sechach must be the roof, and the sky must be above it. Sample excerpt (placeholder): this week’s paper would explain why branches of a tree overhead are a problem, and which cases can still be used l’chatchilah or b’dieved."
+  },
+  {
+    id: "91", number: 91, parsha: "lech-lecha", year: "5786", date: "2025-11-01",
+    title: "…whether ma’aser may be given from a gift?",
+    topics: ["tzedakah", "monetary"],
+    excerpt: "Avraham Avinu gave a tenth to Malki-Tzedek — but what of money that arrives as a gift? Sample excerpt (placeholder): this paper would look at which income is included in ma’aser kesafim, and how gifts and inheritances are treated."
+  },
+  {
+    id: "90", number: 90, parsha: "noach", year: "5786", date: "2025-10-25",
+    title: "…what bracha is said on seeing a rainbow?",
+    topics: ["brachos", "hashkafa"],
+    excerpt: "After the storm, a rainbow over the parking lot. Sample excerpt (placeholder): this paper would set out the bracha said on seeing a rainbow, and why some are careful not to point it out to others."
+  },
+  {
+    id: "39", number: 39, parsha: "lech-lecha", year: "5785", date: "2024-11-09",
+    title: "…why a bris is performed on Shabbos?",
+    topics: ["life-cycle", "shabbos"],
+    excerpt: "The bris milah of a baby born the Shabbos before is done on Shabbos itself. Sample excerpt (placeholder): this paper would look at why a bris on its proper day overrides Shabbos, and when a bris that has been pushed off does not."
   }
 ];
