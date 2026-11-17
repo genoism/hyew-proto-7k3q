@@ -99,6 +99,7 @@
   H.sheetLead = function (s, len) {
     len = len || 100;
     var text = H.sheetText(s) || "";
+    text = text.replace(/^\s*sample excerpt \(placeholder\):\s*/i, "");
     if (text.length <= len) return text;
     var chunk = text.slice(0, len);
     var sp = chunk.lastIndexOf(" ");
