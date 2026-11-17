@@ -312,11 +312,29 @@
 
   function renderTopics() {
     var grid = document.getElementById("topics-grid");
-    grid.innerHTML = topics.map(function (t) {
-      return '<button type="button" class="topic-card" data-open-topic="' + t.id + '">' +
-        '<span class="en">' + escapeHtml(t.en) + "</span>" +
-        '<span class="he" lang="he">' + escapeHtml(t.he) + "</span></button>";
+    var groups = (window.HYEW && HYEW.topicGroups) || [];
+    function item(t) {
+      return '<li><button type="button" class="topic" data-open-topic="' + t.id + '">' +
+        '<span class="tx"><span class="en">' + escapeHtml(t.en) + "</span>" +
+        '<span class="he" lang="he" dir="rtl">' + escapeHtml(t.he) + "</span></span>" +
+        '<span class="ar" aria-hidden="true">→</span></button></li>';
+    }
+    var used = {};
+    var html = groups.map(function (g) {
+      var list = topics.filter(function (t) { return t.group === g.id; });
+      list.forEach(function (t) { used[t.id] = true; });
+      if (!list.length) return "";
+      return '<section class="tgroup" aria-labelledby="tg-' + g.id + '">' +
+        '<h2 class="tg-h sc" id="tg-' + g.id + '">' + escapeHtml(g.en) + "</h2>" +
+        "<ul>" + list.map(item).join("") + "</ul></section>";
     }).join("");
+    /* Any topic without a group (e.g. newly added) lands in a final "More" group. */
+    var rest = topics.filter(function (t) { return !used[t.id]; });
+    if (rest.length) {
+      html += '<section class="tgroup" aria-labelledby="tg-more"><h2 class="tg-h sc" id="tg-more">More topics</h2>' +
+        "<ul>" + rest.map(item).join("") + "</ul></section>";
+    }
+    grid.innerHTML = html;
   }
 
   function renderPastWeeks() {

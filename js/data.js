@@ -7,23 +7,35 @@
  */
 window.HYEW = window.HYEW || {};
 
+/* Topic groups: display order on the homepage index. A topic belongs to
+ * exactly one display group (for layout only). Q&As and sheets still tag
+ * any number of topics — the list itself stays flat. */
+HYEW.topicGroups = [
+  { id: "year",        en: "The Jewish Year" },
+  { id: "daily",       en: "Daily Life" },
+  { id: "family",      en: "Family & Life Cycle" },
+  { id: "people",      en: "Between People" },
+  { id: "foundations", en: "Foundations" }
+];
+
+/* Topics, in display order within each group. "placeholder" marks the 5
+ * extras pending the author's full list. */
 HYEW.topics = [
-  { id: "life-cycle",      en: "Life Cycle Events",              he: "מעגל החיים" },
-  { id: "daily-living",    en: "Daily Living",                   he: "הלכות יום יום" },
-  { id: "jewish-calendar", en: "Jewish Calendar",                he: "הלוח העברי" },
-  { id: "kashrus",         en: "Kashrus",                        he: "כשרות" },
-  { id: "marital-family",  en: "Marital & Family Laws",          he: "הלכות אישות ומשפחה" },
-  { id: "monetary",        en: "Monetary Laws",                  he: "הלכות ממונות" },
-  { id: "mourning",        en: "Mourning & Burial",              he: "אבלות" },
-  { id: "shabbos",         en: "Shabbos",                        he: "שבת" },
-  { id: "hashkafa",        en: "Hashkafa / Jewish Outlook",      he: "השקפה" },
-  { id: "commandments",    en: "Commandments & Prohibitions",    he: "מצוות ואיסורים" },
-  /* — placeholder topics (replace when the full list arrives) — */
-  { id: "tefillah",        en: "Tefillah",                       he: "תפילה" },
-  { id: "brachos",         en: "Brachos",                        he: "ברכות" },
-  { id: "yom-tov",         en: "Yom Tov",                        he: "יום טוב" },
-  { id: "tzedakah",        en: "Tzedakah",                       he: "צדקה" },
-  { id: "medical",         en: "Medical Halacha",                he: "הלכות רפואה" }
+  { id: "shabbos",         group: "year",          en: "Shabbos",                      he: "שבת" },
+  { id: "yom-tov",         group: "year",          en: "Yom Tov",                      he: "יום טוב" },  /* placeholder */
+  { id: "jewish-calendar", group: "year",          en: "Jewish Calendar",              he: "הלוח העברי" },
+  { id: "daily-living",    group: "daily",         en: "Daily Living",                 he: "הלכות יום יום" },
+  { id: "tefillah",        group: "daily",         en: "Tefillah",                     he: "תפילה" },  /* placeholder */
+  { id: "brachos",         group: "daily",         en: "Brachos",                      he: "ברכות" },  /* placeholder */
+  { id: "kashrus",         group: "daily",         en: "Kashrus",                      he: "כשרות" },
+  { id: "life-cycle",      group: "family",        en: "Life Cycle Events",            he: "מעגל החיים" },
+  { id: "marital-family",  group: "family",        en: "Marital & Family Laws",        he: "הלכות אישות ומשפחה" },
+  { id: "mourning",        group: "family",        en: "Mourning & Burial",            he: "אבלות" },
+  { id: "medical",         group: "family",        en: "Medical Halacha",              he: "הלכות רפואה" },  /* placeholder */
+  { id: "monetary",        group: "people",        en: "Monetary Laws",                he: "הלכות ממונות" },
+  { id: "tzedakah",        group: "people",        en: "Tzedakah",                     he: "צדקה" },  /* placeholder */
+  { id: "hashkafa",        group: "foundations",   en: "Hashkafa / Jewish Outlook",    he: "השקפה" },
+  { id: "commandments",    group: "foundations",   en: "Commandments & Prohibitions",  he: "מצוות ואיסורים" }
 ];
 
 HYEW.qa = [
