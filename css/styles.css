@@ -1317,3 +1317,17 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .hk-photos { margin-bottom: 88px; } @media (max-width: 860px) { .hk-photos { margin-bottom: 56px; } }
 /* Parsha sheets archive: latest first */
 .latest { margin-top: 8px; margin-bottom: 56px; }
+/* Search button icon */
+.search-field button[type="submit"] { display: inline-flex; align-items: center; gap: 7px; }
+.search-field button[type="submit"] .s-ic { display: block; flex-shrink: 0; position: relative; top: -1px; }
+/* Header search spans the page content: left edge of topics to right edge of the paper rail */
+header.site { --hpad: 64px; }
+@media (min-width: 901px) {
+  body[data-search="header"] .search-in-header {
+    --sw: min(var(--wrap), calc(100% + 2 * var(--hpad) - 48px));
+    width: var(--sw);
+    margin-left: calc((100% - var(--sw)) / 2);
+    justify-self: start;
+  }
+}
+@media (max-width: 1100px) { header.site { --hpad: 32px; } }

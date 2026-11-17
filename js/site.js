@@ -97,7 +97,7 @@
         '<form class="search-field" role="search" action="' + base + 'index.html">' +
           '<label class="vh" for="q-header">Search questions and parsha sheets</label>' +
           '<input id="q-header" type="search" name="q" placeholder="Search questions and parsha sheets…" autocomplete="off" aria-controls="drop-header">' +
-          '<button type="submit" class="sc">Search</button>' +
+          '<button type="submit" class="sc"><svg class="s-ic" viewBox="0 0 20 20" width="15" height="15" aria-hidden="true" focusable="false"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Search</span></button>' +
         "</form>" +
         '<div class="search-drop" id="drop-header" hidden aria-label="Search suggestions"></div>' +
       "</div>" +
@@ -111,7 +111,7 @@
       '<form class="search-field" role="search" action="' + base + 'index.html">' +
         '<label class="vh" for="q-below">Search questions and parsha sheets</label>' +
         '<input id="q-below" type="search" name="q" placeholder="Ask a word, a topic, a question…" autocomplete="off" aria-controls="drop-below">' +
-        '<button type="submit" class="sc">Search</button>' +
+        '<button type="submit" class="sc"><svg class="s-ic" viewBox="0 0 20 20" width="15" height="15" aria-hidden="true" focusable="false"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Search</span></button>' +
       "</form>" +
       '<div class="search-drop" id="drop-below" hidden aria-label="Search suggestions"></div>' +
     "</div></div></div>";
