@@ -1310,3 +1310,8 @@ dfn.gl:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
   .hk-photo-row img { max-height: none; height: auto; object-fit: contain; }
   .hk-photos { margin-top: 56px; }
 }
+/* Plain double rules (no ornament) */
+.orn span::after, .hk-orn span::after { top: 3px; }
+.hk-letter { margin-bottom: 0; }
+.ded-text { margin-top: 0; }
+.hk-photos { margin-bottom: 88px; } @media (max-width: 860px) { .hk-photos { margin-bottom: 56px; } }
